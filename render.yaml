@@ -1,0 +1,23 @@
+# ================================================================
+#  render.yaml — ByteStar Chat Server
+#  Render.com auto-deploy config
+#  Docs: https://render.com/docs/blueprint-spec
+# ================================================================
+
+services:
+  - type: web
+    name: bytestar-chat
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+
+    # Environment variables
+    # Set PAGES_ORIGIN in the Render dashboard after deploy
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PAGES_ORIGIN
+        sync: false   # You set this manually in Render dashboard
+                      # Value: https://your-subdomain.yourdomain.com
