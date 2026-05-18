@@ -835,9 +835,9 @@ function setChatOnline(ok){
   }
 }
 function loadSocketIO(serverUrl,cb){
-  const su=`${serverUrl}/socket.io/socket.io.js`;
-  if(document.querySelector(`script[src="${su}"]`)){cb();return;}
-  const s=document.createElement('script');s.src=su;s.onload=cb;s.onerror=()=>setChatOnline(false);document.head.appendChild(s);
+  const CDN='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js';
+  if(window.io){cb();return;}
+  const s=document.createElement('script');s.src=CDN;s.onload=cb;s.onerror=()=>setChatOnline(false);document.head.appendChild(s);
 }
 function connectSocket(){
   const s=getS();
