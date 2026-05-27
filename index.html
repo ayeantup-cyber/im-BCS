@@ -1,4 +1,4 @@
-<!doctype html>
+  <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -49,8 +49,8 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     #05060a;
   animation:starPulse 9s ease-in-out infinite alternate}
 @keyframes starPulse{0%{opacity:.75}50%{opacity:1}100%{opacity:.7}}
-.app-shell{position:relative;z-index:2;display:flex;flex-direction:column;height:100vh;overflow:hidden}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:var(--nav-h);flex-shrink:0;background:rgba(5,6,10,.95);border-bottom:1px solid var(--border-hi);backdrop-filter:blur(16px);box-shadow:0 0 28px rgba(0,180,255,.1);gap:12px}
+.app-shell{position:relative;z-index:2;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:var(--nav-h);flex-shrink:0;background:rgba(5,6,10,.95);border-bottom:1px solid var(--border-hi);backdrop-filter:blur(16px);box-shadow:0 0 28px rgba(0,180,255,.1);gap:12px;position:relative;z-index:9998;}
 .brand{display:flex;align-items:center;gap:10px;white-space:nowrap;flex-shrink:0}
 .logo{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:var(--font-disp);font-weight:900;font-size:10px;color:#020c14;box-shadow:var(--glow1),var(--glow2);letter-spacing:1px;flex-shrink:0}
 .brand-name{font-family:var(--font-disp);font-weight:900;font-size:clamp(.7rem,1.8vw,.9rem);letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 22px rgba(0,170,255,.4)}
@@ -64,11 +64,22 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .pill.offline .pill-dot{background:#ff8844}
 .pill.ai-ready{border-color:rgba(180,100,255,.25);color:var(--purple)}
 .pill.ai-ready .pill-dot{background:var(--purple);box-shadow:0 0 5px var(--purple)}
-.nav-tabs{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
-.nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{font-family:var(--font-mono);font-size:.68rem;background:rgba(0,25,55,.4);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 12px;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.nav-tab:hover{border-color:var(--cyan-dim);color:var(--cyan)}
-.nav-tab.active{background:rgba(0,90,190,.28);border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 10px var(--cyan-glow),inset 0 0 6px rgba(0,190,255,.08)}
+/* ── HAMBURGER NAV ── */
+.ham-wrap{position:relative;flex-shrink:0}
+.ham-btn{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;color:var(--cyan);font-family:var(--font-mono);font-size:.72rem;white-space:nowrap}
+.ham-btn:hover{background:rgba(0,212,255,.14);border-color:var(--cyan)}
+.ham-btn .ham-icon{font-size:18px;line-height:1}
+.ham-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:200px;background:rgba(5,8,16,.97);border:1px solid rgba(0,212,255,.2);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.7),0 0 30px rgba(0,212,255,.08);backdrop-filter:blur(20px);z-index:9999;display:none;flex-direction:column;overflow:hidden}
+.ham-menu.open{display:flex;animation:menuDrop .18s ease}
+@keyframes menuDrop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.ham-nav-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-family:var(--font-mono);font-size:.78rem;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;text-align:left;width:100%}
+.ham-nav-item:hover{background:rgba(0,212,255,.07);color:var(--cyan)}
+.ham-nav-item.active{background:rgba(0,90,190,.2);color:var(--cyan);border-left:2px solid var(--cyan)}
+.ham-nav-item .nav-icon{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.ham-divider{height:1px;background:var(--border);margin:4px 0}
+.ham-install-row{display:flex;align-items:center;gap:8px;padding:10px 16px;font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim)}
+.ham-install-row.hidden{display:none}
+.ham-section-label{padding:6px 16px 3px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase}
 .main-area{flex:1;overflow:hidden;display:flex;flex-direction:column}
 .panel{display:none;flex:1;flex-direction:column;overflow:hidden;height:100%}
 .panel.active{display:flex}
@@ -172,42 +183,65 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
 @keyframes dotB{0%,100%{opacity:.25;transform:scale(.75)}50%{opacity:1;transform:scale(1.2)}}
 
 /* ══════════════════════════════════════
-   FIX #3 — SANDBOX WITH CODE FINDER
+   SANDBOX v2 — UPGRADED
 ══════════════════════════════════════ */
 .sandbox-layout{flex:1;display:flex;flex-direction:column;gap:8px;padding:10px;overflow:hidden}
 .sandbox-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0}
 .lang-select{background:var(--bg-input);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-family:var(--font-mono);font-size:.72rem;outline:none;cursor:pointer}
 .safe-badge{font-family:var(--font-mono);font-size:.62rem;color:var(--green);background:rgba(0,255,100,.06);border:1px solid rgba(0,255,100,.18);border-radius:20px;padding:2px 8px}
+.run-badge{font-family:var(--font-mono);font-size:.62rem;color:var(--warn);background:rgba(255,211,106,.06);border:1px solid rgba(255,211,106,.22);border-radius:20px;padding:2px 8px;display:none}
+.run-badge.active{display:inline-flex;align-items:center;gap:4px}
+.sb-divider{width:1px;height:18px;background:var(--border);flex-shrink:0;margin:0 1px}
+.sb-font-controls{display:flex;align-items:center;gap:3px}
+.sb-font-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:12px;font-family:var(--font-mono);font-weight:700;padding:3px 8px;cursor:pointer;transition:all .18s;line-height:1}
+.sb-font-btn:hover{border-color:var(--cyan-dim);color:var(--cyan)}
+.sb-font-size-disp{font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);min-width:28px;text-align:center}
+.sb-wrap-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:.65rem;font-family:var(--font-mono);font-weight:700;padding:3px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+.sb-wrap-btn:hover{border-color:var(--cyan-dim);color:var(--cyan)}
+.sb-wrap-btn.on{border-color:rgba(0,212,255,.3);color:var(--cyan);background:rgba(0,212,255,.07)}
+.btn.run-btn{background:linear-gradient(90deg,#00aa44,#00cc66);color:#020c14;box-shadow:0 0 12px rgba(0,255,100,.2)}
+.btn.run-btn:hover{filter:brightness(1.12)}
+.btn.fmt-btn{background:rgba(255,211,106,.08);color:var(--warn);border:1px solid rgba(255,211,106,.22)}
+.btn.fmt-btn:hover{background:rgba(255,211,106,.16)}
+
+/* Code Finder */
+.code-finder{display:flex;gap:6px;align-items:center;flex-shrink:0;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:9px;padding:8px 10px}
+.code-finder-input{flex:1;background:var(--bg-input);color:var(--text);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-family:var(--font-mono);font-size:.78rem;outline:none;transition:border-color .2s;min-width:0}
+.code-finder-input:focus{border-color:var(--cyan-dim)}
+.code-finder-input::placeholder{color:var(--text-dim)}
+.finder-result{font-family:var(--font-mono);font-size:.68rem;color:var(--text-dim);white-space:nowrap;flex-shrink:0;min-width:60px;text-align:right}
+.finder-result.found{color:var(--green)}
+.finder-result.notfound{color:var(--danger)}
+
+/* Main pane split */
 .sandbox-split{flex:1;display:flex;gap:8px;overflow:hidden;min-height:0}
-.sandbox-half{flex:1;display:flex;flex-direction:column;gap:5px;overflow:hidden}
-.pane-label{font-family:var(--font-mono);font-size:.62rem;color:var(--text-dim);letter-spacing:1.5px;flex-shrink:0}
-.sandbox-ta{flex:1;min-height:0;background:rgba(0,2,8,.9);color:#a8d8ff;border:1px solid var(--border);border-radius:8px;padding:10px;resize:none;outline:none;font-family:var(--font-mono);font-size:.82rem;line-height:1.5;transition:border-color .2s}
-.sandbox-ta:focus{border-color:var(--cyan-dim)}
+.sandbox-half{flex:1;display:flex;flex-direction:column;gap:5px;overflow:hidden;min-height:0}
+.pane-label{font-family:var(--font-mono);font-size:.62rem;color:var(--text-dim);letter-spacing:1.5px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.pane-linecount{font-family:var(--font-mono);font-size:.58rem;color:var(--text-dim);opacity:.6}
+
+/* Line-number editor wrapper */
+.sb-editor-wrap{flex:1;min-height:0;display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s;background:rgba(0,2,8,.9)}
+.sb-editor-wrap:focus-within{border-color:var(--cyan-dim)}
+.sb-line-nums{width:38px;flex-shrink:0;background:rgba(0,0,0,.25);padding:10px 0;overflow:hidden;font-family:var(--font-mono);font-size:.82rem;line-height:1.5;color:var(--text-dim);text-align:right;user-select:none;pointer-events:none;border-right:1px solid rgba(255,255,255,.04)}
+.sb-line-nums span{display:block;padding:0 7px 0 0;opacity:.45;font-size:.7rem}
+.sb-line-nums span.active-line{opacity:1;color:var(--cyan)}
+.sandbox-ta{flex:1;min-height:0;background:transparent;color:#a8d8ff;border:none;border-radius:0;padding:10px;resize:none;outline:none;font-family:var(--font-mono);font-size:.82rem;line-height:1.5;tab-size:2;-moz-tab-size:2}
+
+/* Highlighted preview pane */
 .sandbox-preview{flex:1;overflow-y:auto;min-height:0;background:rgba(0,2,8,.95);border:1px solid var(--border);border-radius:8px;padding:12px}
 .sandbox-preview pre{margin:0}
 
-/* Code Finder */
-.code-finder{
-  display:flex;gap:6px;align-items:center;flex-shrink:0;
-  background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.15);
-  border-radius:9px;padding:8px 10px;
-}
-.code-finder-input{
-  flex:1;background:var(--bg-input);color:var(--text);
-  border:1px solid var(--border);border-radius:7px;
-  padding:7px 10px;font-family:var(--font-mono);font-size:.78rem;
-  outline:none;transition:border-color .2s;
-  min-width:0;
-}
-.code-finder-input:focus{border-color:var(--cyan-dim)}
-.code-finder-input::placeholder{color:var(--text-dim)}
-.finder-result{
-  font-family:var(--font-mono);font-size:.68rem;
-  color:var(--text-dim);white-space:nowrap;flex-shrink:0;
-  min-width:60px;text-align:right;
-}
-.finder-result.found{color:var(--green)}
-.finder-result.notfound{color:var(--danger)}
+/* Run output pane */
+.sb-run-pane{display:none;flex-direction:column;gap:5px;flex-shrink:0;max-height:240px}
+.sb-run-pane.visible{display:flex}
+.sb-run-label{font-family:var(--font-mono);font-size:.62rem;color:var(--text-dim);letter-spacing:1.5px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.sb-run-frame{flex:1;min-height:180px;border:1px solid rgba(0,255,100,.18);border-radius:8px;background:#fff;overflow:hidden}
+.sb-run-console{flex:1;min-height:80px;max-height:130px;overflow-y:auto;background:rgba(0,2,8,.97);border:1px solid rgba(255,211,106,.15);border-radius:8px;padding:8px 10px;font-family:var(--font-mono);font-size:.72rem;line-height:1.6;display:none}
+.sb-run-console.has-output{display:block}
+.sb-con-line{display:block;color:#9be8ff;white-space:pre-wrap;word-break:break-all}
+.sb-con-line.err{color:var(--danger)}
+.sb-con-line.warn{color:var(--warn)}
+.sb-con-line.log{color:#9be8ff}
 
 /* ── SETTINGS ── */
 .settings-layout{flex:1;overflow-y:auto;padding:16px}
@@ -233,6 +267,7 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
 .btn.primary:hover{filter:brightness(1.1)}
 .btn.danger{background:rgba(255,94,94,.12);color:var(--danger)}
 .btn.danger:hover{background:rgba(255,94,94,.22)}
+.storage-meter{font-family:var(--font-mono);font-size:.72rem;color:var(--cyan);margin-top:2px}
 .btn.share-btn{background:rgba(0,212,255,.08);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
 .btn.share-btn:hover{background:rgba(0,212,255,.16)}
 .btn.env-btn{background:rgba(106,0,255,.1);color:var(--purple);border:1px solid rgba(106,0,255,.22)}
@@ -380,7 +415,14 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
 .share-hint{font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);margin-top:3px}
 .share-actions{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap;margin-top:3px}
 
-/* TOASTS */
+/* FILE BUBBLES */
+.msg-file{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.18);border-radius:10px;margin-top:4px;flex-wrap:wrap}
+.msg-file-icon{font-size:22px;flex-shrink:0}
+.msg-file-info{flex:1;min-width:0}
+.msg-file-name{font-family:var(--font-mono);font-size:.78rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg-file-size{font-size:.65rem;color:var(--text-dim);margin-top:2px}
+.msg-file-actions{display:flex;gap:6px;flex-shrink:0}
+.msg-img-preview{max-width:100%;max-height:220px;border-radius:8px;margin-top:6px;border:1px solid rgba(255,255,255,.08)}
 .toast-wrap{position:fixed;bottom:20px;right:18px;z-index:200;display:flex;flex-direction:column;gap:7px;pointer-events:none}
 .toast{padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;pointer-events:none;backdrop-filter:blur(12px);border:1px solid transparent;animation:toast-in .3s ease forwards;max-width:280px}
 .toast.success{background:rgba(0,212,255,.12);border-color:rgba(0,212,255,.25);color:var(--accent1)}
@@ -425,33 +467,40 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
 <body>
 <div class="star-bg"></div>
 
-<div class="install-banner" id="installBanner">
-  <p>⭐ <strong>ByteStar</strong> can be installed as an app.</p>
-  <div class="install-banner-actions">
-    <button class="btn primary btn-sm" id="installBannerBtn">Install</button>
-    <button class="btn btn-sm" id="dismissBanner">Dismiss</button>
-  </div>
-</div>
-
 <div class="app-shell">
   <div class="topbar">
     <div class="brand">
       <div class="logo">A2B</div>
       <div class="brand-name">ByteSt★R</div>
     </div>
-    <nav class="nav-tabs">
-      <button class="nav-tab active" data-panel="vault">⭐ <span>Vault</span></button>
-      <button class="nav-tab" data-panel="chat">💬 <span>Chat</span></button>
-      <button class="nav-tab" data-panel="ai">🤖 <span>AI</span></button>
-      <button class="nav-tab" data-panel="sandbox">⌨️ <span>Sandbox</span></button>
-      <button class="nav-tab" data-panel="settings">⚙️ <span>Settings</span></button>
-    </nav>
+
+    <!-- HAMBURGER NAV -->
+    <div class="ham-wrap" id="hamWrap">
+      <button class="ham-btn" id="hamBtn">
+        <span class="ham-icon">☰</span>
+        <span id="hamActiveLabel">⭐ Vault</span>
+      </button>
+      <div class="ham-menu" id="hamMenu">
+        <div class="ham-section-label">Navigate</div>
+        <button class="ham-nav-item active" data-panel="vault" id="hnav-vault"><span class="nav-icon">⭐</span>Vault</button>
+        <button class="ham-nav-item" data-panel="chat" id="hnav-chat"><span class="nav-icon">💬</span>Chat</button>
+        <button class="ham-nav-item" data-panel="ai" id="hnav-ai"><span class="nav-icon">🤖</span>AI</button>
+        <button class="ham-nav-item" data-panel="sandbox" id="hnav-sandbox"><span class="nav-icon">⌨️</span>Sandbox</button>
+        <button class="ham-nav-item" data-panel="settings" id="hnav-settings"><span class="nav-icon">⚙️</span>Settings</button>
+        <div class="ham-divider"></div>
+        <div class="ham-section-label">App</div>
+        <button class="ham-nav-item" id="hamInstallRow" style="color:var(--cyan)">
+          <span class="nav-icon">⬇️</span>Install App
+        </button>
+        <div style="padding:6px 16px 8px;font-family:var(--font-mono);font-size:.6rem;color:var(--text-dim)">v3.4 · bytestar.bluecomet.work</div>
+      </div>
+    </div>
+
     <div class="status-pills">
       <div class="pill offline" id="agentPill" title="Termux agent"><div class="pill-dot"></div><span id="agentPillTxt">Agent</span></div>
       <div class="pill offline" id="chatPill" title="Chat server"><div class="pill-dot"></div><span id="chatPillTxt">Chat</span></div>
       <div class="pill offline" id="aiPill" title="AI / Claude"><div class="pill-dot"></div><span id="aiPillTxt">AI</span></div>
       <button class="btn btn-sm" id="vaultBtn" style="border-color:rgba(255,211,106,.2);color:var(--warn)">🔒</button>
-      <button class="btn btn-sm" id="installBtn" style="display:none">⬇️</button>
     </div>
   </div>
 
@@ -499,21 +548,31 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
             <div class="status-banner offline" id="chatBanner">
               <div style="display:flex;align-items:center;gap:7px">
                 <div id="chatBannerDot" style="width:7px;height:7px;border-radius:50%;background:#ff8844;flex-shrink:0"></div>
-                <span id="chatBannerTxt">Connecting to imbcs.onrender.com…</span>
+                <span id="chatBannerTxt">Connecting to chat server…</span>
               </div>
               <button class="btn btn-xs" id="chatRetryBtn">Retry</button>
             </div>
             <div id="chatFeed" class="chat-feed"></div>
             <div class="chat-input-area">
+              <!-- hidden file input for attachments -->
+              <input type="file" id="chatFileInput" accept=".html,.htm,image/*" style="display:none"/>
+              <!-- file preview badge (shown when file is staged) -->
+              <div id="chatFileBadge" style="display:none;align-items:center;gap:7px;padding:5px 8px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:8px;font-family:var(--font-mono);font-size:.7rem;color:var(--cyan)">
+                <span id="chatFileBadgeName">file.html</span>
+                <span id="chatFileBadgeSize" style="color:var(--text-dim)"></span>
+                <button id="chatFileRemove" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:.8rem;padding:0 2px;margin-left:auto">✕</button>
+              </div>
               <div class="chat-input-row">
+                <button id="chatAttachBtn" class="btn btn-sm" disabled title="Attach HTML or image"
+                  style="flex-shrink:0;padding:8px 10px;font-size:15px;align-self:flex-end">📎</button>
                 <textarea id="chatInput" class="chat-textarea" rows="2"
-                  placeholder="Message… or paste ```code``` to share safely"
+                  placeholder="Message… paste any amount of code… or attach a file 📎"
                   disabled></textarea>
                 <button id="chatSendBtn" class="btn primary btn-sm" disabled
                   style="padding:10px 16px;align-self:flex-end;flex-shrink:0">↑ Send</button>
               </div>
               <div style="display:flex;justify-content:flex-end">
-                <button id="chatClearBtn" class="btn btn-xs">Clear</button>
+                <button id="chatClearBtn" class="btn btn-xs">Clear Feed</button>
               </div>
             </div>
           </div>
@@ -549,10 +608,11 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
       </div>
     </div>
 
-    <!-- ══ SANDBOX ══ -->
+    <!-- ══ SANDBOX v2 ══ -->
     <div class="panel" id="panel-sandbox">
       <div class="sandbox-layout">
 
+        <!-- Row 1: language + action buttons -->
         <div class="sandbox-toolbar">
           <select class="lang-select" id="langSelect">
             <option value="javascript">JavaScript</option>
@@ -564,35 +624,59 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
             <option value="typescript">TypeScript</option>
             <option value="plaintext">Plain Text</option>
           </select>
+          <div class="sb-divider"></div>
+          <div class="sb-font-controls">
+            <button class="sb-font-btn" id="sbFontDown">A−</button>
+            <span class="sb-font-size-disp" id="sbFontSizeDisp">13px</span>
+            <button class="sb-font-btn" id="sbFontUp">A+</button>
+          </div>
+          <button class="sb-wrap-btn on" id="sbWrapBtn">⏎ Wrap</button>
+          <div class="sb-divider"></div>
           <button class="btn btn-sm" id="sbCopyBtn">📋 Copy</button>
+          <button class="btn btn-sm fmt-btn" id="sbFmtBtn">✨ Format</button>
           <button class="btn btn-sm" id="sbClearBtn">Clear</button>
           <button class="btn btn-sm primary" id="sbShareBtn">📤 To Chat</button>
-          <span class="safe-badge">🛡 NO EXEC</span>
+          <div class="sb-divider"></div>
+          <button class="btn btn-sm run-btn" id="sbRunBtn">▶ Run</button>
+          <span class="safe-badge" id="sbNoExecBadge">🛡 NO EXEC</span>
+          <span class="run-badge" id="sbRunBadge">⚡ LIVE</span>
         </div>
 
-        <!-- FIX #3 — Code Finder bar -->
+        <!-- Row 2: Code Finder -->
         <div class="code-finder">
           <span style="font-family:var(--font-mono);font-size:.68rem;color:var(--cyan-dim);white-space:nowrap;flex-shrink:0">🔍 Find</span>
-          <input
-            type="text"
-            class="code-finder-input"
-            id="finderInput"
-            placeholder="Line number (e.g. 42) or paste a code snippet to jump to it…"
-          />
+          <input type="text" class="code-finder-input" id="finderInput" placeholder="Line number (e.g. 42) or paste a snippet to jump to it…"/>
           <span class="finder-result" id="finderResult">—</span>
           <button class="btn btn-xs primary" id="finderGoBtn">Go</button>
           <button class="btn btn-xs" id="finderClearBtn">✕</button>
         </div>
 
+        <!-- Row 3: Input + Highlighted panes -->
         <div class="sandbox-split">
           <div class="sandbox-half">
-            <div class="pane-label">INPUT</div>
-            <textarea id="sbInput" class="sandbox-ta" placeholder="Paste code here…"></textarea>
+            <div class="pane-label">
+              <span>INPUT</span>
+              <span class="pane-linecount" id="sbLineCount">0 lines</span>
+            </div>
+            <div class="sb-editor-wrap">
+              <div class="sb-line-nums" id="sbLineNums"><span>1</span></div>
+              <textarea id="sbInput" class="sandbox-ta" placeholder="Paste code here…" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
+            </div>
           </div>
           <div class="sandbox-half">
             <div class="pane-label">HIGHLIGHTED</div>
             <div class="sandbox-preview"><pre><code id="sbCode" class="language-javascript"></code></pre></div>
           </div>
+        </div>
+
+        <!-- Row 4: Run output pane (hidden until Run clicked) -->
+        <div class="sb-run-pane" id="sbRunPane">
+          <div class="sb-run-label">
+            <span>▶ LIVE PREVIEW</span>
+            <button class="btn btn-xs danger" id="sbRunCloseBtn">✕ Close</button>
+          </div>
+          <iframe id="sbRunFrame" class="sb-run-frame" sandbox="allow-scripts allow-modals" srcdoc=""></iframe>
+          <div class="sb-run-console" id="sbRunConsole"></div>
         </div>
 
       </div>
@@ -608,6 +692,7 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
             <input type="text" id="setDisplayName" class="input" placeholder="Leave blank for auto Comet name">
             <div class="setting-note">Shown in chat. Auto-assigned if blank.</div>
           </div>
+
           <div class="settings-section-title">AI — Claude</div>
           <div class="setting-row">
             <label class="setting-label">Claude API Key</label>
@@ -615,27 +700,74 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
             <div class="setting-note">Stored in localStorage only. Never sent to any server.</div>
           </div>
           <div class="setting-row">
+            <label class="setting-label">AI Model</label>
+            <select id="setAiModel" class="input" style="cursor:pointer">
+              <option value="claude-sonnet-4-20250514">Claude Sonnet 4 (default)</option>
+              <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (fast)</option>
+              <option value="claude-opus-4-5">Claude Opus 4.5 (powerful)</option>
+            </select>
+            <div class="setting-note">Model used for all AI chat requests.</div>
+          </div>
+          <div class="setting-row">
             <label class="setting-label">AI System Prompt</label>
             <textarea id="setSystemPrompt" class="input" rows="3" style="resize:vertical">You are a helpful assistant in the ByteStar developer dashboard. Be concise and technical.</textarea>
           </div>
+
+          <div class="settings-section-title">Appearance</div>
+          <div class="setting-row">
+            <label class="setting-label">Sandbox Font Size</label>
+            <select id="setSandboxFont" class="input" style="cursor:pointer">
+              <option value="12">12px (compact)</option>
+              <option value="13" selected>13px (default)</option>
+              <option value="14">14px</option>
+              <option value="16">16px (large)</option>
+            </select>
+            <div class="setting-note">Font size used in the Sandbox code editor.</div>
+          </div>
+          <div class="setting-row">
+            <label class="setting-label">Reduced Motion</label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+              <input type="checkbox" id="setReduceMotion" style="accent-color:var(--cyan);width:16px;height:16px;cursor:pointer">
+              <span class="setting-note">Disable star pulse and FAB animations</span>
+            </div>
+          </div>
+
           <div class="settings-section-title">Chat Server</div>
           <div class="setting-row">
             <label class="setting-label">Socket Server URL</label>
             <input type="text" id="setSocketUrl" class="input" value="https://imbcs.onrender.com">
-            <div class="setting-note">Pre-connected to imbcs.onrender.com — chat works out of the box.</div>
+            <div class="setting-note">Pre-configured — chat works out of the box.</div>
           </div>
+
           <div class="settings-section-title">Termux Agent</div>
           <div class="setting-row">
             <label class="setting-label">Agent URL</label>
             <input type="text" id="setAgentUrl" class="input" placeholder="http://127.0.0.1:4567">
             <div class="setting-note">Local only. Only works when agent.js is running in Termux.</div>
           </div>
-          <button class="btn primary" id="saveSettingsBtn" style="align-self:flex-start">💾 Save Settings</button>
+
+          <div class="settings-section-title">Data</div>
+          <div class="setting-row">
+            <label class="setting-label">Storage Used</label>
+            <div id="storageUsed" class="storage-meter">—</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+            <button class="btn btn-sm danger" id="clearSettingsBtn">🗑 Reset Settings</button>
+            <button class="btn btn-sm danger" id="clearAiHistBtn">🗑 Clear AI History</button>
+          </div>
+
+          <button class="btn primary" id="saveSettingsBtn" style="align-self:flex-start;margin-top:8px">💾 Save Settings</button>
           <div id="settingsSaved" class="save-confirm" style="display:none">✓ Saved</div>
         </div>
       </div>
     </div>
 
+  </div>
+  <!-- PERSISTENT FOOTER -->
+  <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:16px;padding:5px 16px;background:rgba(5,6,10,.95);border-top:1px solid rgba(0,212,255,.07);font-family:var(--font-mono);font-size:.6rem;color:var(--text-dim);z-index:10">
+    <a href="https://bluecomet.work" target="_blank" rel="noopener" style="color:var(--cyan-dim);text-decoration:none;letter-spacing:1px;transition:color .2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--cyan-dim)'">BlueComet.Work</a>
+    <span style="opacity:.25">//</span>
+    <a href="https://aiitone.net" target="_blank" rel="noopener" style="color:var(--accent2);opacity:.6;text-decoration:none;letter-spacing:1px;transition:opacity .2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">AiiTONE.NET</a>
   </div>
 </div>
 
@@ -738,6 +870,16 @@ body.desktop-mode .preview-wrap{width:100%;aspect-ratio:4/3}
     </div>
     <div class="env-sec">
       <div class="env-sec-title">Project Folder (Ubuntu)</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
+        <span style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);flex-shrink:0">Device arch:</span>
+        <select id="envArch" class="input" style="font-family:var(--font-mono);font-size:.75rem;padding:4px 8px;width:auto;cursor:pointer">
+          <option value="auto">🔍 Auto-detect</option>
+          <option value="arm64">arm64 (Pixel / most Android)</option>
+          <option value="armv7">armv7 (older Android)</option>
+          <option value="x86_64">x86_64 (PC / emulator)</option>
+        </select>
+        <span id="envArchNote" style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim)"></span>
+      </div>
       <div class="folder-row">
         <span class="folder-pfx">~/bytestar/projects/</span>
         <input type="text" class="input" id="envFolder" placeholder="folder-name" style="flex:1;font-family:var(--font-mono);font-size:.8rem">
@@ -755,6 +897,11 @@ gem install sinatra"></textarea>
         <button class="btn btn-sm" id="envClearInput">Clear</button>
       </div>
       <div class="pkg-list" id="envPkgList"></div>
+      <!-- Manifest Preview -->
+      <div id="manifestPreview" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:8px;font-family:var(--font-mono);font-size:.7rem;line-height:1.8">
+        <div style="color:var(--cyan);font-size:.65rem;letter-spacing:2px;margin-bottom:6px">PARSED MANIFEST</div>
+        <div id="manifestPreviewBody"></div>
+      </div>
     </div>
     <div class="env-sec">
       <div class="env-sec-title">Setup Script — Ubuntu via proot-distro</div>
@@ -780,6 +927,13 @@ gem install sinatra"></textarea>
         <button class="btn btn-sm primary" id="envRunInstall">▶ Run Install</button>
         <button class="btn btn-sm" id="envPushHtml">💾 Push HTML</button>
         <button class="btn btn-sm" id="envOpenProj">☄️ Open</button>
+        <button class="btn btn-sm" id="envPreviewServer" style="border-color:rgba(76,255,145,.3);color:#4cff91">🌐 Preview Server</button>
+      </div>
+      <div id="previewServerBadge" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:rgba(76,255,145,.07);border:1px solid rgba(76,255,145,.2);border-radius:8px;font-family:var(--font-mono);font-size:.72rem;margin-bottom:7px">
+        <span style="color:#4cff91">🌐</span>
+        <a id="previewServerLink" href="#" target="_blank" style="color:#4cff91;text-decoration:none">—</a>
+        <span style="color:var(--text-dim);font-size:.65rem">· auto-kills in 10 min</span>
+        <button id="envStopServer" style="background:none;border:none;color:var(--danger);cursor:pointer;margin-left:auto;font-size:.75rem">Stop ✕</button>
       </div>
       <div class="term-feed" id="termFeed"></div>
     </div>
@@ -826,9 +980,8 @@ gem install sinatra"></textarea>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 <script>
 /* ════════════════════════════════════════════════════
-   ByteStar — Unified App v2.1
-   Fixes: #2 FAB overlap, #3 Code Finder, #5 HTML upload
-   imbcs.bluecomet.work · imbcs.onrender.com
+   ByteStar — Unified App v3.4
+   bytestar.bluecomet.work
 ════════════════════════════════════════════════════ */
 
 const DEFAULT_SOCKET_URL = 'https://imbcs.onrender.com';
@@ -868,21 +1021,64 @@ function loadSettingsUI(){
   if(s.displayName)$('setDisplayName').value=s.displayName;
   if(s.apiKey)$('setApiKey').value=s.apiKey;
   if(s.systemPrompt)$('setSystemPrompt').value=s.systemPrompt;
+  if(s.aiModel)$('setAiModel').value=s.aiModel;
+  if(s.sandboxFont)$('setSandboxFont').value=s.sandboxFont;
+  if(s.reduceMotion)$('setReduceMotion').checked=!!s.reduceMotion;
   $('setSocketUrl').value=s.socketUrl||DEFAULT_SOCKET_URL;
   $('setAgentUrl').value=s.agentUrl||DEFAULT_AGENT_URL;
+  applyAppearanceSettings(s);
+}
+function applyAppearanceSettings(s){
+  const sz=s.sandboxFont||'13';
+  document.querySelectorAll('.sandbox-ta').forEach(el=>el.style.fontSize=sz+'px');
+  if(s.reduceMotion){
+    const sb=document.querySelector('.star-bg');if(sb)sb.style.animation='none';
+    const fab=$('newBtn');if(fab)fab.style.animation='none';
+  } else {
+    const sb=document.querySelector('.star-bg');if(sb)sb.style.animation='';
+    const fab=$('newBtn');if(fab)fab.style.animation='';
+  }
+}
+function updateStorageMeter(){
+  try{
+    let total=0;
+    for(let k in localStorage){if(Object.prototype.hasOwnProperty.call(localStorage,k))total+=((localStorage[k].length+k.length)*2);}
+    const kb=(total/1024).toFixed(1);
+    const proj=Object.keys(db).length;
+    $('storageUsed').textContent=`${kb} KB · ${proj} project${proj!==1?'s':''}`;
+  }catch(e){$('storageUsed').textContent='Unable to measure';}
 }
 $('saveSettingsBtn').addEventListener('click',()=>{
   const s={
     displayName:$('setDisplayName').value.trim(),
     apiKey:$('setApiKey').value.trim(),
     systemPrompt:$('setSystemPrompt').value.trim(),
+    aiModel:$('setAiModel').value||'claude-sonnet-4-20250514',
+    sandboxFont:$('setSandboxFont').value||'13',
+    reduceMotion:$('setReduceMotion').checked,
     socketUrl:$('setSocketUrl').value.trim().replace(/\/$/,'')||DEFAULT_SOCKET_URL,
     agentUrl:$('setAgentUrl').value.trim().replace(/\/$/, '')||DEFAULT_AGENT_URL,
   };
   saveS(s);myName=s.displayName||null;
+  applyAppearanceSettings(s);
+  updateStorageMeter();
   $('settingsSaved').style.display='block';
   setTimeout(()=>$('settingsSaved').style.display='none',2500);
   checkAI();connectSocket();
+});
+$('clearSettingsBtn').addEventListener('click',()=>{
+  if(confirm('Reset all settings to defaults?')){
+    localStorage.removeItem(SETTINGS_KEY);
+    loadSettingsUI();
+    toast('Settings reset','warn');
+  }
+});
+$('clearAiHistBtn').addEventListener('click',()=>{
+  if(confirm('Clear AI conversation history?')){
+    aiHistory=[];
+    $('aiFeed').innerHTML='';
+    toast('AI history cleared','warn');
+  }
 });
 
 /* ── TOAST ── */
@@ -899,23 +1095,40 @@ const closeM=id=>$(id).classList.remove('open');
 /* ══════════════════════════════════════
    FIX #2 — FAB visibility tied to tab
 ══════════════════════════════════════ */
-document.querySelectorAll('.nav-tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    $('panel-'+btn.dataset.panel).classList.add('active');
-    // Show FAB only on vault tab
-    const fab=$('newBtn');
-    fab.classList.toggle('visible', btn.dataset.panel==='vault');
-  });
-});
+/* ── HAMBURGER NAV ── */
+const NAV_LABELS={'vault':'⭐ Vault','chat':'💬 Chat','ai':'🤖 AI','sandbox':'⌨️ Sandbox','settings':'⚙️ Settings'};
+
+let _hamJustClosed=false;
+function closeHamMenu(){$('hamMenu').classList.remove('open');_hamJustClosed=true;setTimeout(()=>_hamJustClosed=false,200);}
+
 function switchTab(name){
-  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.toggle('active',b.dataset.panel===name));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   $('panel-'+name).classList.add('active');
-  $('newBtn').classList.toggle('visible', name==='vault');
+  document.querySelectorAll('.ham-nav-item[data-panel]').forEach(b=>b.classList.toggle('active',b.dataset.panel===name));
+  $('hamActiveLabel').textContent=NAV_LABELS[name]||name;
+  $('newBtn').classList.toggle('visible',name==='vault');
+  if(name==='settings')updateStorageMeter();
+  closeHamMenu();
 }
+
+$('hamBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  if(_hamJustClosed)return;
+  $('hamMenu').classList.toggle('open');
+});
+
+// close on outside click — but not if we just closed via nav item
+document.addEventListener('click',e=>{
+  if(!$('hamWrap').contains(e.target))$('hamMenu').classList.remove('open');
+});
+
+// stopPropagation on every nav item so the document listener doesn't interfere
+document.querySelectorAll('.ham-nav-item').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(btn.dataset.panel)switchTab(btn.dataset.panel);
+  });
+});
 
 /* ── AGENT ── */
 function agentUrl(){return getS().agentUrl||DEFAULT_AGENT_URL;}
@@ -940,15 +1153,15 @@ function setChatOnline(ok){
   const banner=$('chatBanner'),btxt=$('chatBannerTxt'),dot=$('chatBannerDot');
   if(ok){
     banner.className='status-banner online';
-    btxt.textContent='⬤ Chat connected — imbcs.onrender.com';
+    btxt.textContent='⬤ Chat connected';
     dot.style.background='var(--green)';dot.style.boxShadow='0 0 5px var(--green)';
-    $('chatInput').disabled=false;$('chatSendBtn').disabled=false;
+    $('chatInput').disabled=false;$('chatSendBtn').disabled=false;$('chatAttachBtn').disabled=false;
     $('serverStatus').textContent='Online';$('serverStatus').className='stat-val online-txt';
   }else{
     banner.className='status-banner offline';
-    btxt.textContent='Connecting to imbcs.onrender.com…';
+    btxt.textContent='Connecting to chat server…';
     dot.style.background='#ff8844';dot.style.boxShadow='none';
-    $('chatInput').disabled=true;$('chatSendBtn').disabled=true;
+    $('chatInput').disabled=true;$('chatSendBtn').disabled=true;$('chatAttachBtn').disabled=true;
     $('serverStatus').textContent='Offline';$('serverStatus').className='stat-val offline-txt';
     $('userList').innerHTML='<div class="offline-hint">—</div>';
     $('onlineCount').textContent='—';
@@ -961,11 +1174,28 @@ function connectSocket(){
     if(socket){socket.disconnect();socket=null;}
     socket=io(serverUrl,{transports:['websocket','polling'],timeout:10000,reconnectionAttempts:10,reconnectionDelay:3000});
     socket.on('connect',()=>socket.emit('join',{name:s.displayName||null}));
+    // Receive message history on connect
+    socket.on('history',msgs=>{
+      if(!Array.isArray(msgs)||!msgs.length)return;
+      const feed=$('chatFeed');
+      msgs.forEach(msg=>{
+        if(msg.file) createFileBubble(msg,msg.user,{},$('chatFeed'));
+        else if(msg.text) createBubble(msg.text,msg.user,{},$('chatFeed'));
+      });
+      feed.scrollTop=feed.scrollHeight;
+    });
     socket.on('assigned',({cometNumber,name})=>{myCometNum=cometNumber;myName=name;setChatOnline(true);});
     socket.on('userList',users=>{onlineUsers=users;renderUserList();});
     socket.on('chatMessage',msg=>{
-      if(!msg?.text||!msg?.user)return;
-      if(msg.socketId!==socket.id){createBubble(msg.text,msg.user,{},$('chatFeed'));msgCount++;$('msgCount').textContent=msgCount;}
+      if(!msg?.user)return;
+      if(msg.socketId===socket.id)return; // don't echo own messages
+      if(msg.file){
+        createFileBubble(msg,msg.user,{},$('chatFeed'));
+        msgCount++;$('msgCount').textContent=msgCount;
+      } else if(msg.text){
+        createBubble(msg.text,msg.user,{},$('chatFeed'));
+        msgCount++;$('msgCount').textContent=msgCount;
+      }
     });
     socket.on('systemMsg',txt=>createBubble(txt,'',{isSys:true},$('chatFeed')));
     socket.on('connect_error',()=>setChatOnline(false));
@@ -984,13 +1214,205 @@ function renderUserList(){
   });
 }
 $('chatRetryBtn').addEventListener('click',connectSocket);
+/* ── FILE ATTACH ── */
+let stagedFile=null; // {name, size, type, b64}
+
+/* ── ATTACH MENU (Option B) ── */
+// Remove the old single file input, add three targeted inputs
+$('chatFileInput').accept='image/*'; // reuse for camera
+
+// Inject custom attach menu into DOM
+(function(){
+  const menu=document.createElement('div');
+  menu.id='attachMenu';
+  menu.style.cssText='position:absolute;bottom:calc(100% + 8px);left:0;min-width:230px;background:rgba(5,8,16,.97);border:1px solid rgba(0,212,255,.2);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.7);backdrop-filter:blur(20px);z-index:500;display:none;flex-direction:column;overflow:hidden;animation:menuDrop .18s ease';
+  menu.innerHTML=`
+    <div style="padding:10px 14px 4px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase">Attach</div>
+    <button id="attachCamera" style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:var(--font-mono);font-size:.78rem;width:100%;text-align:left;transition:background .15s" onmouseover="this.style.background='rgba(0,212,255,.07)'" onmouseout="this.style.background='none'"><span style="width:20px;text-align:center">📷</span>Camera</button>
+    <button id="attachGallery" style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:var(--font-mono);font-size:.78rem;width:100%;text-align:left;transition:background .15s" onmouseover="this.style.background='rgba(0,212,255,.07)'" onmouseout="this.style.background='none'"><span style="width:20px;text-align:center">🖼️</span>Photo Library</button>
+    <button id="attachFile" style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:var(--font-mono);font-size:.78rem;width:100%;text-align:left;transition:background .15s" onmouseover="this.style.background='rgba(0,212,255,.07)'" onmouseout="this.style.background='none'"><span style="width:20px;text-align:center">📁</span>Files (.html, images)</button>
+    <div style="height:1px;background:rgba(0,212,255,.1);margin:4px 0"></div>
+    <div style="padding:8px 14px 10px">
+      <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--accent2);margin-bottom:3px;letter-spacing:1px">⚛ FUN FACT</div>
+      <div style="font-family:var(--font-mono);font-size:.64rem;color:var(--text-dim);line-height:1.5">Images compress before sending. The original on your device stays untouched — only the copy sent here is compressed. <a href="https://bluecomet.work" target="_blank" style="color:var(--cyan-dim);text-decoration:none">Why this matters →</a></div>
+    </div>
+  `;
+  const inputArea=$('chatInput').closest('.chat-input-area');
+  inputArea.style.position='relative';
+  inputArea.appendChild(menu);
+
+  // hidden inputs for each source
+  const camInput=document.createElement('input');camInput.type='file';camInput.accept='image/*';camInput.capture='environment';camInput.style.display='none';camInput.id='chatCamInput';document.body.appendChild(camInput);
+  const galInput=document.createElement('input');galInput.type='file';galInput.accept='image/*';galInput.style.display='none';galInput.id='chatGalInput';document.body.appendChild(galInput);
+  const fileInput=$('chatFileInput'); // reuse existing, update accept
+  fileInput.accept='.html,.htm,image/*';
+
+  $('chatAttachBtn').addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=menu.style.display==='flex';
+    menu.style.display=open?'none':'flex';
+  });
+  document.addEventListener('click',()=>menu.style.display='none');
+  menu.addEventListener('click',e=>e.stopPropagation());
+
+  document.getElementById('attachCamera').addEventListener('click',()=>{menu.style.display='none';camInput.click();});
+  document.getElementById('attachGallery').addEventListener('click',()=>{menu.style.display='none';galInput.click();});
+  document.getElementById('attachFile').addEventListener('click',()=>{menu.style.display='none';fileInput.click();});
+
+  // wire camera and gallery to same handler
+  [camInput,galInput].forEach(inp=>inp.addEventListener('change',e=>handleFileAttach(e.target.files?.[0],e)));
+})();
+
+/* ── FILE ATTACH HANDLER (shared) ── */
+async function compressImage(file,maxW=1200,quality=0.82){
+  return new Promise(res=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      const scale=Math.min(1,maxW/Math.max(img.width,img.height));
+      const w=Math.round(img.width*scale),h=Math.round(img.height*scale);
+      const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      canvas.toBlob(blob=>res(blob||file),'image/jpeg',quality);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);res(file);};
+    img.src=url;
+  });
+}
+
+async function handleFileAttach(file,e){
+  if(!file)return;
+  const maxMB=5;
+  const isImg=file.type.startsWith('image/');
+  let finalFile=file;
+
+  if(isImg){
+    // always compress images before sending
+    toast('Compressing image…','info');
+    const compressed=await compressImage(file);
+    finalFile=new File([compressed],file.name.replace(/\.\w+$/,'.jpg'),{type:'image/jpeg'});
+    const savedKB=((file.size-finalFile.size)/1024).toFixed(0);
+    if(savedKB>10)toast(`Compressed ${(file.size/1024).toFixed(0)}KB → ${(finalFile.size/1024).toFixed(0)}KB ✓`,'success');
+  }
+
+  if(finalFile.size>maxMB*1024*1024){toast(`File too large after compression — max ${maxMB}MB`,'warn');if(e)e.target.value='';return;}
+
+  const b64=await new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=()=>rej(new Error('Read failed'));
+    r.readAsDataURL(finalFile);
+  });
+  stagedFile={name:finalFile.name,size:finalFile.size,type:finalFile.type,b64};
+  $('chatFileBadgeName').textContent=finalFile.name;
+  $('chatFileBadgeSize').textContent=fmtB(finalFile.size);
+  $('chatFileBadge').style.display='flex';
+  if(e)e.target.value='';
+}
+
+$('chatFileInput').addEventListener('change',e=>handleFileAttach(e.target.files?.[0],e));
+
+$('chatFileRemove').addEventListener('click',()=>{
+  stagedFile=null;
+  $('chatFileBadge').style.display='none';
+});
+
 function sendChat(){
   if(!socket?.connected)return;
-  const text=$('chatInput').value.trim();if(!text)return;
+  const text=$('chatInput').value.trim();
   const name=myName||`Comet ${myCometNum}`||'Comet ?';
+
+  // File send
+  if(stagedFile){
+    const payload={user:name,socketId:socket.id,file:{name:stagedFile.name,size:stagedFile.size,type:stagedFile.type,b64:stagedFile.b64}};
+    if(text)payload.text=text; // optional caption
+    createFileBubble(payload,'You',{isOwn:true},$('chatFeed'));
+    socket.emit('chatMessage',payload);
+    msgCount++;$('msgCount').textContent=msgCount;
+    stagedFile=null;
+    $('chatFileBadge').style.display='none';
+    $('chatInput').value='';
+    return;
+  }
+
+  // Text send (no limit — send full content)
+  if(!text)return;
   createBubble(text,'You',{isOwn:true},$('chatFeed'));
   socket.emit('chatMessage',{user:name,text,socketId:socket.id});
   $('chatInput').value='';msgCount++;$('msgCount').textContent=msgCount;
+}
+
+function createFileBubble(msg,displayName,opts={},feed){
+  const{isOwn=false}=opts;
+  const f=msg.file;
+  const isImg=f.type.startsWith('image/');
+  const isHtml=f.type==='text/html'||f.name.match(/\.html?$/i);
+
+  const bubble=document.createElement('div');
+  bubble.className='msg-bubble'+(isOwn?' own':'');
+
+  const hdr=document.createElement('div');hdr.className='msg-hdr';
+  const nm=document.createElement('span');nm.className='msg-user';nm.textContent=displayName;
+  const tm=document.createElement('span');tm.className='msg-time';tm.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  hdr.append(nm,tm);
+
+  const fileDiv=document.createElement('div');fileDiv.className='msg-file';
+  const icon=document.createElement('span');icon.className='msg-file-icon';
+  icon.textContent=isImg?'🖼️':isHtml?'📄':'📎';
+
+  const info=document.createElement('div');info.className='msg-file-info';
+  const fname=document.createElement('div');fname.className='msg-file-name';fname.textContent=f.name;
+  const fsize=document.createElement('div');fsize.className='msg-file-size';fsize.textContent=fmtB(f.size);
+  info.append(fname,fsize);
+
+  const actions=document.createElement('div');actions.className='msg-file-actions';
+
+  // Download button
+  const dlBtn=document.createElement('button');dlBtn.className='btn btn-xs';dlBtn.textContent='⬇ Save';
+  dlBtn.onclick=()=>{
+    const blob=b64toBlob(f.b64,f.type);
+    dlBlob(blob,f.name);
+    toast(`${f.name} saved ⬇`,'success');
+  };
+  actions.appendChild(dlBtn);
+
+  // Preview button for HTML
+  if(isHtml){
+    const prevBtn=document.createElement('button');prevBtn.className='btn btn-xs primary';prevBtn.textContent='▶ Preview';
+    prevBtn.onclick=()=>{
+      const blob=b64toBlob(f.b64,f.type);
+      window.open(URL.createObjectURL(blob),'_blank');
+    };
+    actions.appendChild(prevBtn);
+  }
+
+  fileDiv.append(icon,info,actions);
+
+  // Inline image preview
+  if(isImg){
+    const img=document.createElement('img');img.className='msg-img-preview';
+    img.src=`data:${f.type};base64,${f.b64}`;
+    img.alt=f.name;
+    bubble.append(hdr,fileDiv,img);
+  } else {
+    bubble.append(hdr,fileDiv);
+  }
+
+  // Optional caption text
+  if(msg.text){
+    const cap=document.createElement('div');cap.className='msg-body';cap.style.marginTop='6px';
+    cap.innerHTML=formatMsg(msg.text);
+    bubble.appendChild(cap);
+  }
+
+  feed.appendChild(bubble);feed.scrollTop=feed.scrollHeight;
+}
+
+function b64toBlob(b64,type){
+  const bin=atob(b64);const arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type});
 }
 $('chatSendBtn').addEventListener('click',sendChat);
 $('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
@@ -1019,7 +1441,7 @@ function createBubble(rawText,displayName,opts={},feed){
     const nm=document.createElement('span');nm.className='msg-user';nm.textContent=displayName;
     const tm=document.createElement('span');tm.className='msg-time';tm.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
     const cp=document.createElement('button');cp.className='copy-btn';cp.textContent='📋';
-    cp.onclick=()=>navigator.clipboard.writeText(rawText).then(()=>{cp.textContent='✅';setTimeout(()=>cp.textContent='📋',1300);});
+    cp.onclick=()=>{sbCopyText(rawText,cp,'📋');};
     hdr.append(nm,tm,cp);
     const body=document.createElement('div');body.className='msg-body';body.innerHTML=formatMsg(rawText);
     bubble.append(hdr,body);
@@ -1045,7 +1467,7 @@ async function sendAI(){
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':s.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:aiHistory})
+      body:JSON.stringify({model:s.aiModel||'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:aiHistory})
     });
     const data=await res.json();
     if(data.error){createBubble(`API Error: ${data.error.message}`,'Error',{isAI:true},$('aiFeed'));aiHistory.pop();}
@@ -1057,8 +1479,83 @@ $('aiSendBtn').addEventListener('click',sendAI);
 $('aiInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}});
 
 /* ══════════════════════════════════════
-   SANDBOX + FIX #3 — CODE FINDER
+   SANDBOX v2 — UPGRADED
 ══════════════════════════════════════ */
+
+/* ── font size & wrap state ── */
+let sbFontSize=13;
+let sbWrapOn=true;
+function applySbFont(){
+  const ta=$('sbInput');
+  ta.style.fontSize=sbFontSize+'px';
+  ta.style.lineHeight='1.5';
+  $('sbLineNums').style.fontSize=sbFontSize+'px';
+  $('sbLineNums').style.lineHeight='1.5';
+  $('sbFontSizeDisp').textContent=sbFontSize+'px';
+}
+function applySbWrap(){
+  const ta=$('sbInput');
+  ta.style.whiteSpace=sbWrapOn?'pre-wrap':'pre';
+  ta.style.overflowX=sbWrapOn?'hidden':'auto';
+  $('sbWrapBtn').classList.toggle('on',sbWrapOn);
+  $('sbWrapBtn').textContent=sbWrapOn?'⏎ Wrap':'→ No Wrap';
+}
+$('sbFontUp').addEventListener('click',()=>{if(sbFontSize<24)sbFontSize+=1;applySbFont();syncLineNums();});
+$('sbFontDown').addEventListener('click',()=>{if(sbFontSize>9)sbFontSize-=1;applySbFont();syncLineNums();});
+$('sbWrapBtn').addEventListener('click',()=>{sbWrapOn=!sbWrapOn;applySbWrap();});
+
+/* ── line numbers ── */
+function syncLineNums(){
+  const ta=$('sbInput');
+  const lines=ta.value.split('\n');
+  const count=lines.length;
+  // active line detection
+  const pos=ta.selectionStart;
+  const activeLine=ta.value.slice(0,pos).split('\n').length;
+  const nums=$('sbLineNums');
+  let html='';
+  for(let i=1;i<=count;i++){
+    html+=`<span${i===activeLine?' class="active-line"':''}>${i}</span>`;
+  }
+  nums.innerHTML=html;
+  // sync scroll
+  nums.scrollTop=ta.scrollTop;
+  // line count label
+  $('sbLineCount').textContent=`${count} line${count!==1?'s':''}`;
+}
+$('sbInput').addEventListener('input',()=>{renderSandbox();syncLineNums();});
+$('sbInput').addEventListener('scroll',()=>{$('sbLineNums').scrollTop=$('sbInput').scrollTop;});
+$('sbInput').addEventListener('keyup',syncLineNums);
+$('sbInput').addEventListener('click',syncLineNums);
+$('sbInput').addEventListener('focus',syncLineNums);
+
+/* ── Tab key support ── */
+$('sbInput').addEventListener('keydown',e=>{
+  if(e.key==='Tab'){
+    e.preventDefault();
+    const ta=$('sbInput');
+    const s=ta.selectionStart,en=ta.selectionEnd;
+    const indent='  '; // 2 spaces
+    if(s===en){
+      // simple insert at cursor
+      ta.value=ta.value.slice(0,s)+indent+ta.value.slice(en);
+      ta.selectionStart=ta.selectionEnd=s+indent.length;
+    } else {
+      // indent selected lines
+      const before=ta.value.slice(0,s),after=ta.value.slice(en);
+      const selected=ta.value.slice(s,en);
+      const indented=e.shiftKey
+        ? selected.replace(/^ {1,2}/gm,'') // dedent
+        : selected.replace(/^/gm,indent);   // indent
+      ta.value=before+indented+after;
+      ta.selectionStart=s;
+      ta.selectionEnd=s+indented.length;
+    }
+    renderSandbox();syncLineNums();
+  }
+});
+
+/* ── main render ── */
 function renderSandbox(){
   const lang=$('langSelect').value;
   $('sbCode').className=`language-${lang}`;
@@ -1067,88 +1564,285 @@ function renderSandbox(){
   catch(_){hl=escH($('sbInput').value);}
   $('sbCode').innerHTML=hl;
 }
-$('sbInput').addEventListener('input',renderSandbox);
 $('langSelect').addEventListener('change',renderSandbox);
+
+/* ── robust copy helper (works on HTTP + mobile) ── */
+function sbCopyText(text,btn,resetLabel){
+  if(!text){toast('Nothing to copy','warn');return;}
+  const finish=()=>{if(btn){btn.textContent='✅';setTimeout(()=>btn.textContent=resetLabel,1500);}toast('Copied 📋','success',1400);};
+  // Try modern clipboard API first
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(finish).catch(()=>sbCopyFallback(text,finish));
+  } else {
+    sbCopyFallback(text,finish);
+  }
+}
+function sbCopyFallback(text,cb){
+  // execCommand fallback — works on HTTP and older Android WebView
+  const ta=document.createElement('textarea');
+  ta.value=text;
+  ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.focus();ta.select();
+  try{document.execCommand('copy');if(cb)cb();}
+  catch(e){toast('Copy failed — long-press to copy manually','warn');}
+  document.body.removeChild(ta);
+}
+
+/* ── copy / clear / share ── */
 $('sbCopyBtn').addEventListener('click',()=>{
-  navigator.clipboard.writeText($('sbInput').value).then(()=>{
-    $('sbCopyBtn').textContent='✅';setTimeout(()=>$('sbCopyBtn').textContent='📋 Copy',1500);
-  });
+  sbCopyText($('sbInput').value,$('sbCopyBtn'),'📋 Copy');
 });
-$('sbClearBtn').addEventListener('click',()=>{$('sbInput').value='';$('sbCode').innerHTML='';$('finderResult').textContent='—';$('finderResult').className='finder-result';});
+$('sbClearBtn').addEventListener('click',()=>{
+  $('sbInput').value='';
+  $('sbCode').innerHTML='';
+  $('finderResult').textContent='—';$('finderResult').className='finder-result';
+  syncLineNums();
+  sbRunClose();
+});
 $('sbShareBtn').addEventListener('click',()=>{
   const code=$('sbInput').value.trim();if(!code)return;
   $('chatInput').value='```'+$('langSelect').value+'\n'+code+'\n```';
   switchTab('chat');$('chatInput').focus();
 });
 
-/* Code Finder Logic */
+/* ── FORMAT button ── */
+function sbFormat(){
+  const lang=$('langSelect').value;
+  const src=$('sbInput').value;
+  if(!src.trim()){toast('Nothing to format','warn');return;}
+  try{
+    let out=src;
+    if(lang==='json'){
+      out=JSON.stringify(JSON.parse(src),null,2);
+    } else if(lang==='html'){
+      out=formatHTML(src);
+    } else if(lang==='css'){
+      out=formatCSS(src);
+    } else if(lang==='javascript'||lang==='typescript'){
+      out=formatJS(src);
+    } else {
+      toast('Auto-format not available for '+lang+' — try HTML, CSS, JS, or JSON','info');
+      return;
+    }
+    $('sbInput').value=out;
+    renderSandbox();
+    syncLineNums();
+    toast('Formatted ✨','success');
+  } catch(e){
+    toast('Format error: '+e.message,'error');
+  }
+}
+
+/* lightweight HTML formatter */
+function formatHTML(src){
+  // normalise line endings, collapse excess whitespace between tags
+  let s=src.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  // remove existing indentation so we start fresh
+  s=s.split('\n').map(l=>l.trim()).filter(l=>l.length>0).join('\n');
+  const INLINE=['a','abbr','acronym','b','bdo','big','br','button','cite','code',
+    'dfn','em','i','img','input','kbd','label','map','object','output','q','s',
+    'samp','select','small','span','strong','sub','sup','textarea','time','tt','u','var'];
+  const VOID=['area','base','br','col','embed','hr','img','input','link','meta',
+    'param','source','track','wbr'];
+  const lines=s.split('\n');
+  let indent=0,out='';
+  const ind=n=>'  '.repeat(Math.max(0,n));
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i];
+    if(!line)continue;
+    // closing tag?
+    const closeM=line.match(/^<\/(\w+)/);
+    if(closeM&&!INLINE.includes(closeM[1].toLowerCase())) indent=Math.max(0,indent-1);
+    out+=ind(indent)+line+'\n';
+    // opening tag — increase indent unless void/inline/self-closing
+    const openM=line.match(/^<(\w+)([^>]*)>/);
+    if(openM){
+      const tag=openM[1].toLowerCase();
+      const attrs=openM[2];
+      if(!VOID.includes(tag)&&!INLINE.includes(tag)&&!/\/>$/.test(line)&&!line.startsWith('</')){
+        // check it's not a one-liner like <div>text</div>
+        const closeInSame=new RegExp(`</${tag}>\\s*$`,'i');
+        if(!closeInSame.test(line)) indent++;
+      }
+    }
+    // doctype / comment keep same
+  }
+  return out.trim();
+}
+
+/* lightweight CSS formatter */
+function formatCSS(src){
+  let s=src.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  // normalize braces
+  s=s.replace(/\{/g,' {\n').replace(/\}/g,'}\n').replace(/;/g,';\n');
+  const lines=s.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  let indent=0,out='';
+  const ind=n=>'  '.repeat(Math.max(0,n));
+  for(const line of lines){
+    if(line==='}'){indent=Math.max(0,indent-1);out+=ind(indent)+line+'\n';}
+    else if(line.endsWith('{')){out+=ind(indent)+line+'\n';indent++;}
+    else{out+=ind(indent)+line+'\n';}
+  }
+  return out.trim();
+}
+
+/* lightweight JS formatter — normalise indentation via brace counting */
+function formatJS(src){
+  let s=src.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  // split preserving strings is hard — do a simple brace-based pass
+  const lines=s.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  let indent=0,out='';
+  const ind=n=>'  '.repeat(Math.max(0,n));
+  for(const line of lines){
+    // count braces/brackets to decide indent changes
+    const opens=(line.match(/[{[(]/g)||[]).length;
+    const closes=(line.match(/[}\])]/g)||[]).length;
+    // if line starts with closing, reduce first
+    if(/^[}\])]/.test(line)) indent=Math.max(0,indent-1);
+    out+=ind(indent)+line+'\n';
+    const net=opens-closes;
+    if(net>0) indent+=net;
+    else if(net<0&&!/^[}\])]/.test(line)) indent=Math.max(0,indent+net);
+  }
+  return out.trim();
+}
+
+$('sbFmtBtn').addEventListener('click',sbFormat);
+
+/* ── RUN button ── */
+function sbRunClose(){
+  $('sbRunPane').classList.remove('visible');
+  $('sbRunFrame').srcdoc='';
+  $('sbRunConsole').innerHTML='';
+  $('sbRunConsole').classList.remove('has-output');
+  $('sbNoExecBadge').style.display='';
+  $('sbRunBadge').classList.remove('active');
+}
+$('sbRunCloseBtn').addEventListener('click',sbRunClose);
+
+$('sbRunBtn').addEventListener('click',()=>{
+  const code=$('sbInput').value.trim();
+  if(!code){toast('Nothing to run','warn');return;}
+  const lang=$('langSelect').value;
+  $('sbRunConsole').innerHTML='';
+  $('sbRunConsole').classList.remove('has-output');
+
+  // console capture shim injected into iframe
+  const consolePatch=`<script>
+(function(){
+  const _send=msg=>parent.postMessage({type:'sb-log',payload:msg},'*');
+  const fmt=(...a)=>a.map(x=>{try{return typeof x==='object'?JSON.stringify(x,null,2):String(x);}catch(_){return String(x);}}).join(' ');
+  const orig={log:console.log,warn:console.warn,error:console.error};
+  console.log=(...a)=>{_send({level:'log',text:fmt(...a)});orig.log(...a);};
+  console.warn=(...a)=>{_send({level:'warn',text:fmt(...a)});orig.warn(...a);};
+  console.error=(...a)=>{_send({level:'err',text:fmt(...a)});orig.error(...a);};
+  window.onerror=(msg,src,line,col)=>{_send({level:'err',text:`Error: ${msg} (line ${line})`});};
+})();
+<\/script>`;
+
+  let doc='';
+  if(lang==='html'){
+    // inject console patch + branding footer into the html
+    if(code.includes('</body>')){
+      doc=code.replace('</body>',consolePatch+'</body>');
+    } else {
+      doc=consolePatch+code;
+    }
+  } else if(lang==='css'){
+    doc=`<!doctype html><html><head><meta charset="utf-8">
+<style>body{background:#f8f8ff;color:#111;font-family:system-ui,sans-serif;padding:20px;margin:0}</style>
+${consolePatch}
+<style>${code}</style>
+</head><body>
+<h1>CSS Preview</h1><p>This is a paragraph to preview your styles.</p>
+<div class="box">A div with class "box"</div>
+<button>A button</button>
+<a href="#">A link</a>
+</body></html>`;
+  } else if(lang==='javascript'||lang==='typescript'){
+    doc=`<!doctype html><html><head><meta charset="utf-8">
+<style>body{background:#05060a;color:#9be8ff;font-family:'Share Tech Mono',monospace;font-size:13px;padding:14px;margin:0}
+.con-line{display:block;border-bottom:1px solid rgba(255,255,255,.05);padding:3px 0;white-space:pre-wrap;word-break:break-all}
+.con-warn{color:#ffd36a}.con-err{color:#ff5e5e}</style>
+${consolePatch}
+</head><body>
+<div id="out"></div>
+<script>
+try{${code}}catch(e){console.error(e.message);}
+<\/script>
+</body></html>`;
+  } else {
+    toast('Run is available for HTML, CSS, and JavaScript','info');
+    return;
+  }
+
+  $('sbNoExecBadge').style.display='none';
+  $('sbRunBadge').classList.add('active');
+  $('sbRunPane').classList.add('visible');
+  $('sbRunFrame').srcdoc=doc;
+  toast('Running ▶','success',1200);
+});
+
+/* listen for console messages from iframe */
+window.addEventListener('message',e=>{
+  if(!e.data||e.data.type!=='sb-log')return;
+  const{level,text}=e.data.payload;
+  const con=$('sbRunConsole');
+  con.classList.add('has-output');
+  const span=document.createElement('span');
+  span.className='sb-con-line '+(level==='err'?'err':level==='warn'?'warn':'log');
+  span.textContent=(level==='err'?'✗ ':level==='warn'?'⚠ ':'› ')+text;
+  con.appendChild(span);
+  con.scrollTop=con.scrollHeight;
+});
+
+/* ── Code Finder ── */
 function runFinder(){
   const query=$('finderInput').value.trim();
   const result=$('finderResult');
   const ta=$('sbInput');
   if(!query){result.textContent='—';result.className='finder-result';return;}
-
   const content=ta.value;
   if(!content){result.textContent='empty';result.className='finder-result notfound';return;}
 
-  // Check if it's a line number (pure digits)
   if(/^\d+$/.test(query)){
     const lineNum=parseInt(query,10);
     const lines=content.split('\n');
-    if(lineNum<1||lineNum>lines.length){
-      result.textContent=`no line ${lineNum}`;
-      result.className='finder-result notfound';
-      return;
-    }
-    // Calculate character offset for that line
+    if(lineNum<1||lineNum>lines.length){result.textContent=`no line ${lineNum}`;result.className='finder-result notfound';return;}
     let offset=0;
     for(let i=0;i<lineNum-1;i++) offset+=lines[i].length+1;
-    // Scroll textarea to that line
-    ta.focus();
-    ta.setSelectionRange(offset, offset+lines[lineNum-1].length);
-    // Scroll into view
-    const lineHeight=parseInt(getComputedStyle(ta).lineHeight)||18;
+    ta.focus();ta.setSelectionRange(offset,offset+lines[lineNum-1].length);
+    const lineHeight=parseFloat(getComputedStyle(ta).lineHeight)||sbFontSize*1.5;
     ta.scrollTop=(lineNum-1)*lineHeight - ta.clientHeight/2;
-    result.textContent=`line ${lineNum} ✓`;
-    result.className='finder-result found';
-    // Also highlight in the preview
+    result.textContent=`line ${lineNum} ✓`;result.className='finder-result found';
     highlightPreviewLine(lineNum);
+    syncLineNums();
     return;
   }
 
-  // Snippet search — find first occurrence
   const idx=content.indexOf(query);
   if(idx===-1){
-    // Try case-insensitive
     const lIdx=content.toLowerCase().indexOf(query.toLowerCase());
-    if(lIdx===-1){
-      result.textContent='not found';
-      result.className='finder-result notfound';
-      return;
-    }
-    // Case-insensitive match
-    ta.focus();
-    ta.setSelectionRange(lIdx,lIdx+query.length);
+    if(lIdx===-1){result.textContent='not found';result.className='finder-result notfound';return;}
+    ta.focus();ta.setSelectionRange(lIdx,lIdx+query.length);
     const lineNum=content.slice(0,lIdx).split('\n').length;
-    const lineHeight=parseInt(getComputedStyle(ta).lineHeight)||18;
+    const lineHeight=parseFloat(getComputedStyle(ta).lineHeight)||sbFontSize*1.5;
     ta.scrollTop=(lineNum-1)*lineHeight - ta.clientHeight/2;
-    result.textContent=`~line ${lineNum} ✓`;
-    result.className='finder-result found';
+    result.textContent=`~line ${lineNum} ✓`;result.className='finder-result found';
+    syncLineNums();
     return;
   }
 
-  // Exact match
-  ta.focus();
-  ta.setSelectionRange(idx,idx+query.length);
+  ta.focus();ta.setSelectionRange(idx,idx+query.length);
   const lineNum=content.slice(0,idx).split('\n').length;
-  const lineHeight=parseInt(getComputedStyle(ta).lineHeight)||18;
+  const lineHeight=parseFloat(getComputedStyle(ta).lineHeight)||sbFontSize*1.5;
   ta.scrollTop=(lineNum-1)*lineHeight - ta.clientHeight/2;
-  result.textContent=`line ${lineNum} ✓`;
-  result.className='finder-result found';
+  result.textContent=`line ${lineNum} ✓`;result.className='finder-result found';
+  syncLineNums();
 }
 
 function highlightPreviewLine(lineNum){
-  // Re-render with the target line wrapped in a mark
   const lang=$('langSelect').value;
   const lines=$('sbInput').value.split('\n');
   const highlighted=lines.map((line,i)=>{
@@ -1165,10 +1859,14 @@ $('finderGoBtn').addEventListener('click',runFinder);
 $('finderInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runFinder();}});
 $('finderClearBtn').addEventListener('click',()=>{
   $('finderInput').value='';
-  $('finderResult').textContent='—';
-  $('finderResult').className='finder-result';
-  renderSandbox(); // re-render without highlight mark
+  $('finderResult').textContent='—';$('finderResult').className='finder-result';
+  renderSandbox();
 });
+
+/* ── init sandbox defaults ── */
+applySbFont();
+applySbWrap();
+syncLineNums();
 
 /* ── MONACO ── */
 require.config({paths:{vs:'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs'}});
@@ -1180,7 +1878,7 @@ require(['vs/editor/editor.main'],()=>{
 const getVal=()=>monacoReady?monacoInst.getValue():'';
 const setVal=v=>{if(monacoReady)monacoInst.setValue(v||'');};
 function selectAll(){if(!monacoReady)return;monacoInst.focus();const m=monacoInst.getModel();if(!m)return;const ll=m.getLineCount(),lc=m.getLineMaxColumn(ll);monacoInst.setSelection({startLineNumber:1,startColumn:1,endLineNumber:ll,endColumn:lc});toast('All selected','info',1400);}
-async function copyAll(){if(!monacoReady)return;try{await navigator.clipboard.writeText(monacoInst.getValue());toast('Copied 📋','success',1600);}catch(e){selectAll();toast('Clipboard blocked — selected','warn',2500);}}
+function copyAll(){if(!monacoReady)return;sbCopyText(monacoInst.getValue(),null,'');}
 $('selectAllBtn').addEventListener('click',selectAll);
 $('copyAllBtn').addEventListener('click',copyAll);
 $('clearEditorBtn').addEventListener('click',()=>{if(monacoReady&&monacoInst.getValue().trim()){if(confirm('Clear all code?')){setVal('');toast('Cleared','warn',1400);}}});
@@ -1238,6 +1936,7 @@ function buildCard(k){
     mkBtn('☄️','primary',()=>runProject(k)),
     mkBtn('✏️','',()=>editProject(k)),
     mkBtn(agentOnline&&hasPkgs?'⚡●':'⚡',agentOnline&&hasPkgs?'env-btn live':'env-btn',()=>openEnv(k)),
+    mkBtn('💬','',()=>sendVaultToChat(k)),
     mkBtn('⬇️','',()=>exportHtml(k)),
     mkBtn('📦','',()=>exportZip(k)),
     mkBtn('📧','share-btn',()=>openShare(k)),
@@ -1246,6 +1945,35 @@ function buildCard(k){
   meta.appendChild(acts);card.appendChild(meta);return card;
 }
 function mkBtn(l,cls,fn){const b=document.createElement('button');b.className='btn btn-sm '+(cls||'');b.innerHTML=l;b.onclick=fn;return b;}
+
+/* ── VAULT → CHAT FILE SEND ── */
+async function sendVaultToChat(id){
+  if(!socket?.connected){toast('Chat not connected','warn');return;}
+  const p=db[id];if(!p)return;
+  let html=null;
+  if(p.locked){
+    const pw=prompt('Password to send locked project:');
+    if(!pw)return;
+    try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);html=JSON.parse(dec).html;}
+    catch(e){toast('Wrong password','error');return;}
+  } else {
+    html=p.html||'';
+  }
+  if(!html){toast('Project is empty','warn');return;}
+  const bytes=new TextEncoder().encode(html);
+  const maxMB=2;
+  if(bytes.length>maxMB*1024*1024){toast(`File too large to send (max ${maxMB}MB)`,'warn');return;}
+  // encode html string to base64
+  const b64=btoa(unescape(encodeURIComponent(html)));
+  const fname=(p.title||'project').replace(/[^a-zA-Z0-9_\- ]/g,'_')+'.html';
+  const name=myName||`Comet ${myCometNum}`||'Comet ?';
+  const payload={user:name,socketId:socket.id,file:{name:fname,size:bytes.length,type:'text/html',b64}};
+  createFileBubble(payload,'You',{isOwn:true},$('chatFeed'));
+  socket.emit('chatMessage',payload);
+  msgCount++;$('msgCount').textContent=msgCount;
+  switchTab('chat');
+  toast(`"${p.title}" sent to chat 💬`,'success');
+}
 function placeholder(t='?'){const l=(t[0]||'B').toUpperCase();return `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='%230b1520'/><text x='50%' y='45%' fill='%2300d4ff' font-size='72' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='900'>${l}</text><text x='50%' y='72%' fill='%23334466' font-size='14' text-anchor='middle' font-family='monospace'>ByteStAR</text></svg>`;}
 function envState(id){const p=db[id];if(!p)return '';if(!(p.manifest?.packages?.length))return '';return agentOnline?'green':'orange';}
 function refreshEnvDots(){document.querySelectorAll('[data-env-dot]').forEach(d=>{d.className='env-dot '+envState(d.dataset.envDot);});}
@@ -1296,12 +2024,38 @@ $('skipLock').addEventListener('click',()=>{
 /* ── EDIT / RUN ── */
 async function editProject(id){const p=db[id];if(p.locked){const pw=prompt('Password:');if(!pw)return;try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);const obj=JSON.parse(dec);openEditor(id,obj.title,obj.html,p.imageData,p.tags||[]);}catch(e){toast('Wrong password','error');}}else{openEditor(id,p.title,p.html,p.imageData,p.tags||[]);}}
 function openEditor(id,title,html,imgData,tags){editingId=id;$('projTitle').value=title||'';setVal(html||'');stagedImg=imgData||null;editingTags=[...(tags||[])];renderEditTags();const th=$('coverThumb');if(imgData&&!imgData.startsWith('data:image/svg')){th.innerHTML='';th.className='';const img=document.createElement('img');img.className='cover-preview';img.src=imgData;th.appendChild(img);}else{th.innerHTML='🖼';th.className='cover-none';}openM('editorModal');}
-async function runProject(id){const p=db[id];let html;if(p.locked){const pw=prompt('Password:');if(!pw)return;try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);html=JSON.parse(dec).html;}catch(e){toast('Wrong password','error');return;}}else{html=p.html||'';}window.open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');}
+const PREVIEW_FOOTER=`<div style="position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:14px;padding:5px 16px;background:rgba(5,6,10,.92);border-top:1px solid rgba(0,212,255,.1);font-family:'Share Tech Mono',monospace;font-size:.58rem;color:rgba(100,160,200,.6);z-index:99999;pointer-events:auto"><a href="https://bluecomet.work" target="_blank" style="color:rgba(0,180,220,.6);text-decoration:none;letter-spacing:1px">BlueComet.Work</a><span style="opacity:.3">//</span><a href="https://aiitone.net" target="_blank" style="color:rgba(106,0,255,.5);text-decoration:none;letter-spacing:1px">AiiTONE.NET</a></div>`;
+
+function injectPreviewFooter(html){
+  if(html.includes('</body>'))return html.replace('</body>',PREVIEW_FOOTER+'</body>');
+  return html+PREVIEW_FOOTER;
+}
+
+async function runProject(id){
+  const p=db[id];let html;
+  if(p.locked){const pw=prompt('Password:');if(!pw)return;try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);html=JSON.parse(dec).html;}catch(e){toast('Wrong password','error');return;}}
+  else{html=p.html||'';}
+  // inject footer for in-browser preview only
+  window.open(URL.createObjectURL(new Blob([injectPreviewFooter(html)],{type:'text/html'})),'_blank');
+}
 
 /* ── EXPORTS ── */
 async function getProjectHtml(id){const p=db[id];if(p.locked){const pw=prompt('Password:');if(!pw)return null;try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);return JSON.parse(dec).html;}catch(e){toast('Wrong password','error');return null;}}return p.html||'';}
 async function exportHtml(id){const h=await getProjectHtml(id);if(h===null)return;const t=(db[id].title||'project').replace(/[^a-z0-9_-]/gi,'_');dlBlob(new Blob([h],{type:'text/html'}),t+'.html');toast('Downloaded ⬇️','success');}
-async function exportZip(id){const h=await getProjectHtml(id);if(h===null)return;const p=db[id];const t=(p.title||'project').replace(/[^a-z0-9_-]/gi,'_');try{const zip=new JSZip();zip.file(t+'.html',h);if(p.imageData?.startsWith('data:image')){const b64=p.imageData.split(',')[1];if(b64)zip.file('cover.jpg',b64,{base64:true});}if(p.manifest)zip.file('bytestar.json',JSON.stringify(p.manifest,null,2));const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});dlBlob(blob,t+'_bytestar.zip');toast('ZIP 📦','success');}catch(e){toast('ZIP failed','error');}}
+async function exportZip(id){
+  if(typeof JSZip==='undefined'){toast('ZIP library not loaded — check connection','error');return;}
+  const h=await getProjectHtml(id);if(h===null)return;
+  const p=db[id];const t=(p.title||'project').replace(/[^a-z0-9_-]/gi,'_');
+  try{
+    const zip=new JSZip();
+    zip.file(t+'.html',h);
+    if(p.imageData?.startsWith('data:image')){const b64=p.imageData.split(',')[1];if(b64)zip.file('cover.jpg',b64,{base64:true});}
+    if(p.manifest)zip.file('bytestar.json',JSON.stringify(p.manifest,null,2));
+    const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
+    dlBlob(blob,t+'_bytestar.zip');
+    toast('ZIP ready 📦','success');
+  }catch(e){console.error('ZIP error:',e);toast('ZIP failed: '+e.message,'error');}
+}
 $('downloadHtmlBtn').addEventListener('click',()=>{const t=($('projTitle').value||'project').replace(/[^a-z0-9_-]/gi,'_');dlBlob(new Blob([getVal()||'<!-- empty -->'],{type:'text/html'}),t+'.html');toast('Downloaded ⬇️','success');});
 $('downloadZipBtn').addEventListener('click',async()=>{const t=($('projTitle').value||'project').replace(/[^a-z0-9_-]/gi,'_');const h=getVal()||'<!-- empty -->';try{const zip=new JSZip();zip.file(t+'.html',h);if(stagedImg?.startsWith('data:image')){const b64=stagedImg.split(',')[1];if(b64)zip.file('cover.jpg',b64,{base64:true});}const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});dlBlob(blob,t+'_bytestar.zip');toast('ZIP 📦','success');}catch(e){toast('ZIP failed','error');}});
 $('previewBtn').addEventListener('click',()=>window.open(URL.createObjectURL(new Blob([getVal()||'<!-- empty -->'],{type:'text/html'})),'_blank'));
@@ -1384,8 +2138,24 @@ function updateEnvBanner(){
   else{banner.className='conn-banner grey';dot.className='cdot grey';txt.textContent='Agent not detected — add packages and generate script';ts.style.display='none';}
 }
 $('envCheckBtn').addEventListener('click',async()=>{await checkAgent(false);updateEnvBanner();});
-$('envJumpChatBtn').addEventListener('click',()=>{closeM('envModal');switchTab('chat');if(envId&&db[envId]&&!db[envId].locked){const code=db[envId].html||'';if(code){$('chatInput').value='```html\n'+code.slice(0,2000)+(code.length>2000?'\n…':'')+'\n```';$('chatInput').focus();toast('Code loaded into chat','info');}}});
-function renderPkgList(){const list=$('envPkgList');list.innerHTML='';if(!envPkgs.length){list.innerHTML='<div class="pkg-empty">No packages yet.</div>';return;}envPkgs.forEach((cmd,i)=>{const item=document.createElement('div');item.className='pkg-item';const sp=document.createElement('div');sp.className='pkg-item-cmd';sp.textContent=cmd;const rm=document.createElement('button');rm.className='pkg-rm';rm.textContent='✕';rm.onclick=()=>{envPkgs.splice(i,1);renderPkgList();};item.append(sp,rm);list.appendChild(item);});}
+$('envJumpChatBtn').addEventListener('click',()=>{closeM('envModal');if(envId)sendVaultToChat(envId);else switchTab('chat');});
+function renderManifestPreview(){
+  const preview=$('manifestPreview'),body=$('manifestPreviewBody');
+  if(!envPkgs.length){preview.style.display='none';return;}
+  const cats={APT:[],PIP:[],'NPM Global':[],'NPM Local':[],GEM:[],Raw:[]};
+  envPkgs.forEach(cmd=>{
+    if(/^(apt|apt-get)\s+install/i.test(cmd)){cmd.replace(/^(apt|apt-get)\s+install\s+(-y\s+)?/i,'').trim().split(/\s+/).forEach(n=>{if(n&&n!=='-y')cats.APT.push(n);});}
+    else if(/^pip3?\s+install/i.test(cmd))cats.PIP.push(cmd.replace(/^pip3?\s+install\s+/i,'').trim());
+    else if(/^npm\s+install\s+-g/i.test(cmd))cats['NPM Global'].push(cmd.replace(/^npm\s+install\s+-g\s+/i,'').trim());
+    else if(/^npm\s+install/i.test(cmd))cats['NPM Local'].push(cmd.replace(/^npm\s+install\s+/i,'').trim());
+    else if(/^gem\s+install/i.test(cmd))cats.GEM.push(cmd.replace(/^gem\s+install\s+/i,'').trim());
+    else cats.Raw.push(cmd);
+  });
+  let html='';
+  Object.entries(cats).forEach(([cat,items])=>{if(!items.length)return;html+=`<div style="margin-bottom:4px"><span style="color:var(--accent2);min-width:90px;display:inline-block">${cat}:</span>${items.map(i=>`<span style="color:var(--text)">${i}</span>`).join(', ')}</div>`;});
+  body.innerHTML=html;preview.style.display='block';
+}
+function renderPkgList(){const list=$('envPkgList');list.innerHTML='';if(!envPkgs.length){list.innerHTML='<div class="pkg-empty">No packages yet.</div>';renderManifestPreview();return;}envPkgs.forEach((cmd,i)=>{const item=document.createElement('div');item.className='pkg-item';const sp=document.createElement('div');sp.className='pkg-item-cmd';sp.textContent=cmd;const rm=document.createElement('button');rm.className='pkg-rm';rm.textContent='✕';rm.onclick=()=>{envPkgs.splice(i,1);renderPkgList();};item.append(sp,rm);list.appendChild(item);});renderManifestPreview();}
 function parsePkgs(raw){return raw.split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')).filter(l=>/^(apt|apt-get|pkg|pip|pip3|gem|npm|yarn|cargo|go get)/i.test(l)||l.includes(' install '));}
 $('envAddPkgs').addEventListener('click',()=>{const raw=$('envPkgInput').value;const parsed=parsePkgs(raw);if(!parsed.length){toast('No recognizable install commands','warn');return;}parsed.forEach(cmd=>{if(!envPkgs.includes(cmd))envPkgs.push(cmd);});renderPkgList();$('envPkgInput').value='';toast(`Added ${parsed.length} command${parsed.length!==1?'s':''}` ,'success');});
 $('envClearInput').addEventListener('click',()=>{$('envPkgInput').value='';});
@@ -1396,28 +2166,303 @@ $('envGenerate').addEventListener('click',()=>{
   if(!envId||!db[envId])return;
   const folder=$('envFolder').value.trim()||safeName(db[envId].title||'project');
   const pkgs=[...envPkgs];
-  db[envId].manifest={folderName:folder,packages:pkgs};saveDB(db);renderVault();refreshEnvDots();
-  const pkgCmds=pkgs.length?pkgs.map(p=>{if(/^(pip|gem|npm|yarn|cargo)/.test(p))return p;if(/^(apt|apt-get)/.test(p))return `DEBIAN_FRONTEND=noninteractive ${p} -y`;if(/^pkg install/.test(p))return `${p} -y`;return `DEBIAN_FRONTEND=noninteractive apt install -y ${p}`;}).join(' && \\\n  '):'# No packages specified';
-  const auto=`#!/data/data/com.termux/files/usr/bin/bash\n# ByteStar Setup — ${db[envId].title||'Project'}\nset -e\npkg update -y && pkg install -y proot-distro curl wget\nproot-distro install ubuntu 2>/dev/null || echo "already installed"\nproot-distro login ubuntu -- bash -c '\n  set -e\n  apt update -y\n  mkdir -p ~/bytestar/projects/${folder}\n  ${pkgCmds}\n  curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -\n  apt install -y nodejs\n  mkdir -p ~/bytestar\n  cd ~/bytestar && node agent.js &\n  echo "✅ Done!"\n'`;
+  const arch=$('envArch').value;
+  db[envId].manifest={folderName:folder,packages:pkgs,arch};saveDB(db);renderVault();refreshEnvDots();
+
+  // ── categorize packages by installer ──
+  const aptPkgs=[],pipPkgs=[],gemPkgs=[],npmGlobalPkgs=[],npmLocalPkgs=[],yarnPkgs=[],cargoPkgs=[],rawCmds=[];
+  pkgs.forEach(cmd=>{
+    if(/^pip3?\s+install/i.test(cmd))pipPkgs.push(cmd.replace(/^pip3?\s+install\s+/i,'').trim());
+    else if(/^gem\s+install/i.test(cmd))gemPkgs.push(cmd.replace(/^gem\s+install\s+/i,'').trim());
+    else if(/^npm\s+install\s+-g/i.test(cmd))npmGlobalPkgs.push(cmd.replace(/^npm\s+install\s+-g\s+/i,'').trim());
+    else if(/^npm\s+install/i.test(cmd)){
+      // no -g flag = local project dependency
+      npmLocalPkgs.push(cmd.replace(/^npm\s+install\s+/i,'').trim());
+    }
+    else if(/^yarn\s+add/i.test(cmd))yarnPkgs.push(cmd.replace(/^yarn\s+add\s+/i,'').trim());
+    else if(/^cargo\s+install/i.test(cmd))cargoPkgs.push(cmd.replace(/^cargo\s+install\s+/i,'').trim());
+    else if(/^(apt|apt-get)\s+install/i.test(cmd)){
+      const names=cmd.replace(/^(apt|apt-get)\s+install\s+(-y\s+)?/i,'').trim();
+      names.split(/\s+/).forEach(n=>{if(n&&n!=='-y')aptPkgs.push(n);});
+    } else {
+      rawCmds.push(cmd);
+    }
+  });
+
+  // arch note
+  const archNote=arch==='auto'?'# arch: auto-detected at runtime':
+    arch==='arm64'?'# arch: arm64 (aarch64 — Pixel / most modern Android)':
+    arch==='armv7'?'# arch: armv7 — note: some packages unavailable on 32-bit':
+    '# arch: x86_64 (emulator / PC)';
+
+  // ── smart install function — each pkg independent, logs pass/fail ──
+  const safeAptBlock=aptPkgs.length?`
+  echo "── APT packages ──"
+  FAILED_APT=()
+  apt_install(){
+    echo -n "  → apt: $1 ... "
+    if DEBIAN_FRONTEND=noninteractive apt-get install -y "$1" > /tmp/bs_apt.log 2>&1; then
+      echo "✓"
+    else
+      echo "✗ FAILED"
+      FAILED_APT+=("$1")
+    fi
+  }
+${aptPkgs.map(p=>`  apt_install ${p}`).join('\n')}
+  [ \${#FAILED_APT[@]} -gt 0 ] && echo "⚠ APT failures: \${FAILED_APT[*]}" || echo "✓ All APT packages done"
+`:'';
+
+  const safePipBlock=pipPkgs.length?`
+  echo "── PIP packages ──"
+  FAILED_PIP=()
+  pip_install(){
+    echo -n "  → pip: $1 ... "
+    if pip3 install "$1" > /tmp/bs_pip.log 2>&1; then
+      echo "✓"
+    else
+      echo "✗ FAILED"
+      FAILED_PIP+=("$1")
+    fi
+  }
+${pipPkgs.map(p=>`  pip_install ${p}`).join('\n')}
+  [ \${#FAILED_PIP[@]} -gt 0 ] && echo "⚠ PIP failures: \${FAILED_PIP[*]}" || echo "✓ All PIP packages done"
+`:'';
+
+  const safeGemBlock=gemPkgs.length?`
+  echo "── GEM packages ──"
+  FAILED_GEM=()
+${gemPkgs.map(p=>`  gem install ${p} && echo "✓ ${p}" || { echo "✗ ${p} FAILED"; FAILED_GEM+=(${p}); }`).join('\n')}
+`:'';
+
+  // npm cache stabilization + global installs
+  const safeNpmGlobalBlock=(npmGlobalPkgs.length)?`
+  echo "── NPM Cache Stabilization ──"
+  mkdir -p /tmp/npm-cache
+  npm config set cache /tmp/npm-cache --global
+  npm cache clean --force 2>/dev/null || true
+  echo "✓ npm cache configured"
+  echo "── NPM Global packages ──"
+  FAILED_NPM_G=()
+${npmGlobalPkgs.map(p=>`  npm install -g ${p} && echo "✓ ${p}" || { echo "✗ ${p} FAILED"; FAILED_NPM_G+=(${p}); }`).join('\n')}
+  [ \${#FAILED_NPM_G[@]} -gt 0 ] && echo "⚠ NPM global failures: \${FAILED_NPM_G[*]}" || echo "✓ All NPM global packages done"
+`:'';
+
+  // npm local installs — run inside project folder
+  const safeNpmLocalBlock=(npmLocalPkgs.length)?`
+  echo "── NPM Local packages (project dependencies) ──"
+  mkdir -p /tmp/npm-cache
+  npm config set cache /tmp/npm-cache --global
+  cd ~/bytestar/projects/${folder}
+  npm init -y > /dev/null 2>&1 && echo "✓ package.json initialized"
+  FAILED_NPM_L=()
+${npmLocalPkgs.map(p=>`  npm install ${p} && echo "✓ ${p}" || { echo "✗ ${p} FAILED"; FAILED_NPM_L+=(${p}); }`).join('\n')}
+  [ \${#FAILED_NPM_L[@]} -gt 0 ] && echo "⚠ NPM local failures: \${FAILED_NPM_L[*]}" || echo "✓ All NPM local packages done"
+  cd ~
+`:'';
+
+  // if there are ANY npm packages (global or local), always stabilize cache first
+  const npmCacheOnlyBlock=(!npmGlobalPkgs.length&&!npmLocalPkgs.length)?'':'';
+
+  const rawBlock=rawCmds.length?`
+  echo "── Custom commands ──"
+${rawCmds.map(c=>`  ${c} || echo "⚠ Command may have failed: ${c.slice(0,40)}"`).join('\n')}
+`:'';
+
+  const auto=
+`#!/data/data/com.termux/files/usr/bin/bash
+${archNote}
+# ByteStar Smart Setup — ${db[envId].title||'Project'}
+# Each package installs independently — failures are logged, not fatal
+set -uo pipefail
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo " ByteStar Setup · bytestar.bluecomet.work"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# ── TERMUX BASE ──
+echo "→ Updating Termux..."
+pkg update -y && pkg upgrade -y
+pkg install -y proot-distro curl wget || { echo "✗ proot-distro install failed — check Termux"; exit 1; }
+
+# ── UBUNTU ──
+echo "→ Setting up Ubuntu..."
+proot-distro install ubuntu 2>/dev/null && echo "✓ Ubuntu installed" || echo "ℹ Ubuntu already present"
+
+# ── UBUNTU ENVIRONMENT ──
+proot-distro login ubuntu -- bash -c '
+  set -uo pipefail
+  ARCH=$(uname -m)
+  echo "→ Arch detected: $ARCH"
+  echo "→ Updating Ubuntu..."
+  apt-get update -y -q
+
+  echo "→ Creating project folder..."
+  mkdir -p ~/bytestar/projects/${folder} && echo "✓ ~/bytestar/projects/${folder}"
+${safeAptBlock}${safePipBlock}${safeGemBlock}${safeNpmGlobalBlock}${safeNpmLocalBlock}${rawBlock}
+  # ── WORKSPACE SCAFFOLDING ──
+  echo "→ Scaffolding project workspace..."
+  cd ~/bytestar/projects/${folder}
+  [ ! -f index.html ] && touch index.html && echo "✓ index.html"
+  [ ! -f style.css ]  && touch style.css  && echo "✓ style.css"
+  [ ! -f app.js ]     && touch app.js     && echo "✓ app.js"
+  [ ! -f README.md ]  && echo "# ${db[envId]?.title||folder}" > README.md && echo "✓ README.md"
+  cd ~
+  # ── NODE.JS (for ByteStar agent) ──
+  echo "→ Installing Node.js..."
+  if ! command -v node &>/dev/null; then
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - > /dev/null 2>&1
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && echo "✓ Node.js $(node -v)"
+  else
+    echo "ℹ Node.js already installed: $(node -v)"
+  fi
+
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo " ✅ Setup complete!"
+  echo " Any ✗ failures above can be installed manually."
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+'`;
+
   $('autoScript').textContent=auto;
+
+  // ── STEP BY STEP ──
   const steps=[
-    {t:'Update Termux & install proot-distro',cmd:'pkg update -y && pkg install -y proot-distro curl wget'},
+    {t:'Update & upgrade Termux',cmd:'pkg update -y && pkg upgrade -y'},
+    {t:'Install proot-distro',cmd:'pkg install -y proot-distro curl wget'},
     {t:'Install Ubuntu',cmd:'proot-distro install ubuntu'},
     {t:'Enter Ubuntu',cmd:'proot-distro login ubuntu'},
-    {t:'Update Ubuntu',cmd:'apt update -y'},
+    {t:'Update Ubuntu',cmd:'apt-get update -y'},
     {t:`Create project folder`,cmd:`mkdir -p ~/bytestar/projects/${folder}`},
-    ...(pkgs.length?[{t:'Install packages',cmd:pkgCmds}]:[]),
-    {t:'Install Node.js',cmd:'curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && apt install -y nodejs'},
-    {t:'Start ByteStar Agent',cmd:'cd ~/bytestar && node agent.js'},
+    ...(aptPkgs.length?aptPkgs.map(p=>({t:`Install apt: ${p}`,cmd:`apt-get install -y ${p} || echo "✗ ${p} failed — continuing"`})):[]),
+    ...(pipPkgs.length?[{t:'Install pip packages (individually)',cmd:pipPkgs.map(p=>`pip3 install ${p} || echo "✗ ${p} failed"`).join(' && ')}]:[]),
+    ...(gemPkgs.length?[{t:'Install gem packages',cmd:gemPkgs.map(p=>`gem install ${p} || echo "✗ ${p} failed"`).join(' && ')}]:[]),
+    ...(npmGlobalPkgs.length?[
+      {t:'Stabilize npm cache',cmd:'mkdir -p /tmp/npm-cache && npm config set cache /tmp/npm-cache --global && npm cache clean --force'},
+      ...npmGlobalPkgs.map(p=>({t:`Install npm global: ${p}`,cmd:`npm install -g ${p} || echo "✗ ${p} failed"`}))
+    ]:[]),
+    ...(npmLocalPkgs.length?[
+      {t:'Init project package.json',cmd:`cd ~/bytestar/projects/${folder} && npm init -y`},
+      ...npmLocalPkgs.map(p=>({t:`Install local: ${p}`,cmd:`npm install ${p} || echo "✗ ${p} failed"`}))
+    ]:[]),
+    ...(rawCmds.length?rawCmds.map(c=>({t:`Run: ${c.slice(0,40)}`,cmd:c})):[]),
+    {t:'Install Node.js (for agent)',cmd:'curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -y nodejs'},
+    {t:'Verify Node.js',cmd:'node -v && npm -v'},
   ];
+
   const sl=$('stepList');sl.innerHTML='';
-  steps.forEach((step,i)=>{const wrap=document.createElement('div');wrap.className='step-item';const num=document.createElement('div');num.className='step-num';num.textContent=i+1;const body=document.createElement('div');body.className='step-body';const tl=document.createElement('div');tl.className='step-title';tl.textContent=step.t;const cmd=document.createElement('div');cmd.className='step-cmd';cmd.textContent=step.cmd;cmd.onclick=async()=>{try{await navigator.clipboard.writeText(step.cmd);cmd.style.borderColor='var(--green)';setTimeout(()=>cmd.style.borderColor='',1200);toast('Copied ✓','success',1200);}catch(e){toast('Tap and hold to copy','info');}};body.append(tl,cmd);wrap.append(num,body);sl.appendChild(wrap);});
-  toast('Script generated ✓','success');
+  steps.forEach((step,i)=>{
+    const wrap=document.createElement('div');wrap.className='step-item';
+    const num=document.createElement('div');num.className='step-num';num.textContent=i+1;
+    const body=document.createElement('div');body.className='step-body';
+    const tl=document.createElement('div');tl.className='step-title';tl.textContent=step.t;
+    const cmd=document.createElement('div');cmd.className='step-cmd';cmd.textContent=step.cmd;
+    cmd.onclick=()=>{sbCopyText(step.cmd,null,'');cmd.style.borderColor='var(--green)';setTimeout(()=>cmd.style.borderColor='',1200);};
+    body.append(tl,cmd);wrap.append(num,body);sl.appendChild(wrap);
+  });
+
+  // show arch note
+  const archMap={auto:'Auto-detect at runtime',arm64:'arm64 — Pixel / modern Android',armv7:'armv7 — older 32-bit Android',x86_64:'x86_64 — emulator / PC'};
+  $('envArchNote').textContent='→ '+archMap[arch];
+
+  toast('Smart script generated ✓','success');
 });
-$('autoCopyBtn').addEventListener('click',async()=>{const c=$('autoScript').textContent;if(c.startsWith('←')){toast('Generate first','warn');return;}try{await navigator.clipboard.writeText(c);toast('Script copied 📋','success');}catch(e){toast('Tap and hold to copy','info');}});
+$('autoCopyBtn').addEventListener('click',()=>{const c=$('autoScript').textContent;if(c.startsWith('←')){toast('Generate first','warn');return;}sbCopyText(c,null,'');});
 
 function termAppend(text,cls){const feed=$('termFeed');feed.classList.add('show');const sp=document.createElement('span');sp.className=cls||'t-out';sp.textContent=text;feed.appendChild(sp);feed.scrollTop=feed.scrollHeight;}
 function termClear(){const f=$('termFeed');f.innerHTML='';f.classList.remove('show');}
 async function agentStream(endpoint,body){termClear();termAppend(`▶ ${endpoint}\n`,'t-out');try{const res=await fetch(`${agentUrl()}${endpoint}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){termAppend(`Error: ${res.status}\n`,'t-err');return;}const reader=res.body.getReader(),decoder=new TextDecoder();let buf='';while(true){const{done,value}=await reader.read();if(done)break;buf+=decoder.decode(value,{stream:true});const lines=buf.split('\n');buf=lines.pop();for(const line of lines){if(!line.startsWith('data:'))continue;try{const d=JSON.parse(line.slice(5).trim());if(d.type==='stdout')termAppend(d.data,'t-out');else if(d.type==='stderr')termAppend(d.data,'t-err');else if(d.type==='exit')termAppend(`\n[exit ${d.data}]\n`,d.data===0?'t-ok':'t-bad');}catch(_){}}}}catch(e){termAppend(`Connection error: ${e.message}\n`,'t-err');}}
 $('envRunInstall').addEventListener('click',async()=>{if(!envId||!agentOnline)return;const p=db[envId];const folder=p.manifest?.folderName||safeName(p.title||'project');const packages=p.manifest?.packages||[];if(!packages.length){toast('No packages in manifest','warn');return;}await agentStream('/install',{name:folder,packages});});
-$('envPushHtml').addEven
+$('envPushHtml').addEventListener('click',async()=>{if(!envId||!agentOnline)return;const p=db[envId];const folder=p.manifest?.folderName||safeName(p.title||'project');const h=await getProjectHtml(envId);if(h===null)return;try{const r=await fetch(`${agentUrl()}/save-html`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:folder,html:h})});const d=await r.json();if(d.ok)toast('HTML pushed ✓','success');else toast('Push failed','error');}catch(e){toast('Agent unreachable','error');}});
+$('envOpenProj').addEventListener('click',async()=>{if(!envId)return;const h=await getProjectHtml(envId);if(h!==null)window.open(URL.createObjectURL(new Blob([h],{type:'text/html'})),'_blank');});
+
+/* ── PREVIEW SERVER ── */
+let previewServerPort=null;
+$('envPreviewServer').addEventListener('click',async()=>{
+  if(!envId||!agentOnline){toast('Agent must be online to use preview server','warn');return;}
+  const h=await getProjectHtml(envId);if(h===null)return;
+  const folder=db[envId]?.manifest?.folderName||safeName(db[envId]?.title||'project');
+  try{
+    // push HTML first
+    const pushRes=await fetch(`${agentUrl()}/save-html`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:folder,html:h})});
+    const pushData=await pushRes.json();
+    if(!pushData.ok){toast('Failed to push HTML to agent','error');return;}
+    // start temp server
+    const srvRes=await fetch(`${agentUrl()}/preview-server`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:folder})});
+    const srvData=await srvRes.json();
+    if(!srvData.ok||!srvData.port){toast('Preview server failed to start','error');return;}
+    previewServerPort=srvData.port;
+    const url=`http://127.0.0.1:${srvData.port}`;
+    $('previewServerLink').href=url;
+    $('previewServerLink').textContent=url;
+    $('previewServerBadge').style.display='flex';
+    toast(`Preview live at ${url} 🌐`,'success');
+    // auto-kill badge after 10 min
+    setTimeout(()=>{$('previewServerBadge').style.display='none';previewServerPort=null;},10*60*1000);
+  }catch(e){toast('Agent unreachable — is it running?','error');}
+});
+$('envStopServer').addEventListener('click',async()=>{
+  if(!previewServerPort||!agentOnline)return;
+  try{await fetch(`${agentUrl()}/preview-server/stop`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({port:previewServerPort})});}catch(_){}
+  $('previewServerBadge').style.display='none';
+  previewServerPort=null;
+  toast('Preview server stopped','info');
+});
+
+/* ── SHARE ── */
+const getSFmt=()=>document.querySelector('input[name="shareFmt"]:checked')?.value||'html';
+function buildShareContent(html,title,note){const fmt=getSFmt();if(fmt==='html')return`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escH(title)}</title><style>body{background:#05060a;color:#ddeaf6;font-family:'Space Mono',monospace;padding:2rem;margin:0}.nb{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.22);border-radius:10px;padding:1rem 1.4rem;margin-bottom:1.5rem}.nl{font-size:.65rem;letter-spacing:2px;color:#0099cc;margin-bottom:.5rem;text-transform:uppercase}.nt{font-size:.9rem;line-height:1.7;white-space:pre-wrap}.cb{background:#070c12;border:1px solid rgba(0,180,255,.12);border-radius:10px;padding:1.2rem;overflow-x:auto}pre{font-size:.82rem;line-height:1.55;white-space:pre-wrap;word-wrap:break-word;margin:0}h2{font-size:.75rem;letter-spacing:3px;color:#00d4ff;margin-bottom:1rem;text-transform:uppercase}footer{margin-top:2rem;font-size:.6rem;color:#2a3d50}</style></head><body><h2>⌨ ${escH(title)}</h2>${note?`<div class="nb"><div class="nl">Note</div><div class="nt">${escH(note)}</div></div>`:''}<div class="cb"><pre>${escH(html)}</pre></div><footer>ByteStar · bytestar.bluecomet.work · ATØB.Q</footer></body></html>`;if(fmt==='txt')return note?`NOTE:\n${note}\n\n${'─'.repeat(40)}\n\n${html}`:html;return html;}
+async function openShare(id){const p=db[id];shareId=id;shareHtml=null;if(p.locked){const pw=prompt('Password to share:');if(!pw)return;try{const dec=await decrypt(p.cipher,pw,p.salt,p.iv);shareHtml=JSON.parse(dec).html;}catch(e){toast('Wrong password','error');return;}}else{shareHtml=p.html||'';}$('shareName').textContent=p.title||'Untitled';$('shareEmail').value='';$('shareNote').value='';const r=document.querySelector('input[name="shareFmt"][value="html"]');if(r)r.checked=true;openM('shareModal');$('shareEmail').focus();}
+async function doShare(openEmail){const p=db[shareId];if(!p||shareHtml===null)return;const title=p.title||'project';const note=$('shareNote').value.trim();const email=$('shareEmail').value.trim();const fmt=getSFmt();const sn=title.replace(/[^a-z0-9_\-]/gi,'_');if(fmt==='zip'){try{const zip=new JSZip();zip.file(sn+'.html',shareHtml);if(note)zip.file('note.txt',note);if(p.manifest)zip.file('bytestar.json',JSON.stringify(p.manifest,null,2));if(p.imageData?.startsWith('data:image')){const b64=p.imageData.split(',')[1];if(b64)zip.file('cover.jpg',b64,{base64:true});}const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});dlBlob(blob,sn+'_share.zip');toast('ZIP 📦','success');}catch(e){toast('ZIP failed','error');}}else{const ext=fmt==='html'?'html':'txt';dlBlob(new Blob([buildShareContent(shareHtml,title,note)],{type:fmt==='html'?'text/html':'text/plain'}),sn+'.'+ext);toast(`${ext.toUpperCase()} downloaded ⬇️`,'success');}if(openEmail){const subject=encodeURIComponent(`ByteStar Share: ${title}`);const body=encodeURIComponent((note?note+'\n\n':'')+'── Project: '+title+' ──\nAttach the downloaded file.\n\nShared via ByteStar · bytestar.bluecomet.work');setTimeout(()=>{window.location.href=`mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;},350);}closeM('shareModal');}
+$('shareClose').addEventListener('click',()=>closeM('shareModal'));
+$('shareCancel').addEventListener('click',()=>closeM('shareModal'));
+$('shareDlOnly').addEventListener('click',()=>doShare(false));
+$('shareGo').addEventListener('click',()=>doShare(true));
+
+/* ── PWA ── */
+/* ── PWA INSTALL ── */
+let deferredInstallPrompt=null;
+function triggerInstall(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(r=>{
+      deferredInstallPrompt=null;
+      if(r.outcome==='accepted')toast('ByteStar installed! ⭐','success');
+    });
+  } else {
+    // Manual fallback — browser didn't fire beforeinstallprompt
+    const isIos=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isAndroid=/android/i.test(navigator.userAgent);
+    if(isIos){
+      toast('On iOS: tap Share → Add to Home Screen','info');
+    } else if(isAndroid){
+      toast('Tap browser menu (⋮) → Add to Home Screen','info');
+    } else {
+      toast('Click browser address bar → install icon, or browser menu → Install app','info');
+    }
+  }
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  console.log('ByteStar: install prompt ready');
+});
+$('hamInstallRow').addEventListener('click',e=>{e.stopPropagation();triggerInstall();closeHamMenu();});
+window.addEventListener('appinstalled',()=>toast('ByteStar installed! ⭐','success'));
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+window.addEventListener('storage',()=>{db=loadDB();renderTagBar();renderVault();});
+
+/* ── BOOT ── */
+loadSettingsUI();
+checkAI();
+setChatOnline(false);
+setViewMode(localStorage.getItem('bytestar_viewmode')||'mobile');
+renderTagBar();
+renderVault();
+checkAgent(true);
+connectSocket();
+</script>
+</body>
+</html>
+
+
